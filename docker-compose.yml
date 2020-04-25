@@ -1,0 +1,45 @@
+version: '3.0'
+
+volumes:
+    backend-data:
+
+services:
+  posgres-database:
+    build:
+      context: ./posgres-database
+      dockerfile: ./Dockerfile
+    ports:
+      - "5434:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./posgres-database/sql/:/home
+
+  django-backend:
+    env_file:
+      - ./django-backend/.env
+    build:
+      context: ./django-backend
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./django-backend/:/code/
+      - backend-data:/data
+    ports:
+      - "8081:8080"
+      - "4000:4000"
+    depends_on:
+      - posgres-database
+
+  react-frontend:
+    build:
+      context: ./react-frontend
+      dockerfile: ./Dockerfile
+    volumes:
+      - './react-frontend:/app'
+      - '/app/node_modules'
+    ports:
+      - '3001:3000'
+      - '5000:5000'
+    environment:
+      - NODE_ENV=development
+      
