@@ -1,0 +1,45 @@
+
+"""ecat URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/2.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls import url, include
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView
+from rest_framework.response import Response
+from rest_auth.registration.views import VerifyEmailView, RegisterView, LoginView, ConfirmEmailView
+from . import views
+from accounts.views import CustomRegisterView, CurrentUserView
+from django.utils.translation import ugettext_lazy as _
+admin.site.site_header = _("E-Catelog Administration")
+admin.site.site_title = _("E-Catelog Admin")
+
+urlpatterns = [
+    url('api/admin/', admin.site.urls),
+    url('api/', include('categories.urls')),
+    url('api/', include('products.urls')),
+    url(r'^admin/', admin.site.urls),
+    url(r'^auth/registration/account-email-verification-sent/', views.null_view, name='account_email_verification_sent'),
+    url(r'^auth/account-confirm-email/(?P<key>[-:\w]+)/$', views.CustomConfirmEmailView.as_view(), name='account_confirm_email'),
+    url(r'^auth/registration/complete/$', views.complete_view, name='account_confirm_complete'),
+    url(r'^auth/login/', LoginView.as_view(), name='account_login'),
+    url(r'^auth/registration/', CustomRegisterView.as_view(), name='custom_register_view'),
+    url(r'^auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.null_view, name='password_reset_confirm'),
+    url(r'^auth/', include('rest_auth.urls')),
+    url(r'^me/', CurrentUserView.as_view(), name='current_user_view'),
+    url(r'^accounts/', include('accounts.urls')),
+]
+
+urlpatterns += staticfiles_urlpatterns()

@@ -1,0 +1,66 @@
+<div class="right-data">
+  <div class="main-box">
+    <div class="container">
+      <div class="table table-fav">
+        <table width="100%">
+          <thead>
+            <tr>
+              <th>IMAGE</th>
+              <th width="20%">NAME</th>
+              <th>PRODUCT CODE</th>
+              <th>QUANTITY</th>
+              <th>UNIT PRICE</th>
+              <th>TOTAL</th>
+              <th>REMOVE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cart of cartItems">
+              <td>
+                <a class="fav-frame">
+                    <img src="assets/images/ecat/category/{{cart.product.category.code}}.png">
+                </a>
+              </td>
+              <td width="20%">
+                <a>{{cart.product.name}}</a>
+              </td>
+              <td>
+                <a>{{cart.product.item_code}}</a>
+              </td>
+              <td class="quan">
+                {{cart.quantity}}
+              </td>
+              <td>
+                <a>&#8377;{{cart.product[userMrp]}}</a>
+              </td>
+              <td>
+                <a>&#8377;{{cart.product[userMrp] * cart.quantity}}</a>
+              </td>
+              <td>
+                <a class="fav-btn-remove" (click)="removeFromCart(cart)">REMOVE</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="cartItems.length==0" ><p style="text-align: center">Your cart is empty!</p></div>
+      <div *ngIf="cartItems.length>0" class="cart-total">
+        <div class="text-right">
+          <h4>
+            Sub-Total: &#8377;{{total}}
+          </h4>
+          <h4>Total: &#8377;{{total}}</h4>
+        </div>
+      </div>
+      <div *ngIf="cartItems.length>0" class="fav-continue-shop">
+        <div class="text-right">
+          <div class="invoice-cart">
+            <div class="invoice">
+              <a (click)=generateInvoice()>Generate Invoice</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

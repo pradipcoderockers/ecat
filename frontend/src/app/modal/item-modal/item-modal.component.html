@@ -1,0 +1,154 @@
+<div class="modal-sandbox"></div>
+<div class="modal-box">
+    <div id="closealert" class="alert alert-{{alertClass}} fade in alert-dismissible" style="margin-top:18px;" [hidden]="!successmsg">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+        {{successmsg}}
+    </div>
+    <div class="modal-header" *ngIf="item.item_code">
+        <div class="close-modal">
+            <span CLASS="model-head-detail">DETAILS OF PRODUCT CODE : {{item.item_code}}</span>
+            <span style="color:red; font-size:1.4rem;" (click)="activeModal.dismiss('Cross click')">&#10006;</span>
+        </div>
+    </div>
+    <div class="modal-body" *ngIf="item">
+        <div class="{{(item.image)?'col-xs-6':'col-xs-12'}} ">
+            <div class="part-name-modal">
+                <div class="part-model-left">
+                    <p>ITEM CODE</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p> {{item.item_code}} </p>
+                </div>
+            </div>
+            <div class="part-name-modal">
+                <div class="part-model-left">
+                    <p>ITEM NAME</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p> {{item.name}} </p>
+                </div>
+            </div>
+            <div class="part-name-modal" *ngIf="item.particuler">
+                <div class="part-model-left">
+                    <p> {{( item.comefrom=='LEAF SPRING' || item.comefrom=='LIFT AXLE COMPONENTS' || item.comefrom=='TRAILER
+                        SUSPENSION' )?'NAME':'PARTICULAR'}} </p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.particuler}}</p>
+                </div>
+            </div>
+            <div class="part-name-modal" *ngIf="item.length">
+                <div class="part-model-left">
+                    <p>LENGTH(INCH)</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.length}}</p>
+                </div>
+
+            </div>
+            <div class="part-name-modal" *ngIf="item.variant">
+                <div class="part-model-left">
+                    <p>VARIENT</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.variant}}</p>
+                </div>
+            </div>
+
+            <div class="part-name-modal" *ngIf="item.leaf_desc">
+                <div class="part-model-left">
+                    <p>TYPE</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.leaf_desc}}</p>
+                </div>
+            </div>
+            <div class="part-name-modal" *ngIf="item.drawing_refno">
+                <div class="part-model-left">
+                    <p>DRAWING REF. NO</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.drawing_refno}}</p>
+                </div>
+            </div>
+            <div class="part-name-modal" *ngIf="item.ch_detail">
+                <div class="part-model-left">
+                    <p>C.H.&#8709;[mm] & POSITION</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.ch_detail}}</p>
+                </div>
+
+            </div>
+            <div class="part-name-modal" *ngIf="item.sh_detail">
+                <div class="part-model-left">
+                    <p>S.H.DETAIL[mm]</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.sh_detail}}</p>
+                </div>
+
+            </div>
+            <div class="part-name-modal" *ngIf="item.standardPackaging && ( item.comefrom=='LIFT AXLE COMPONENTS' || item.comefrom=='LEAF SPRING ALLIED' || item.comefrom== 'TRAILER SUSPENSION')">
+                <div class="part-model-left">
+                    <p>STANDARD PACKING</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.standardPackaging}}</p>
+                </div>
+
+            </div>
+
+            <div class="part-name-modal" *ngIf="item.varientcode">
+                <div class="part-model-left">
+                    <p>Varient Code</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.varientcode}}</p>
+                </div>
+            </div>
+            <div class="part-name-modal" *ngIf="item.suitableFor">
+                <div class="part-model-left">
+                    <p>SUITABLE FOR</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.suitableFor}}</p>
+                </div>
+            </div>
+            <div class="part-name-modal" *ngIf="item.weight">
+                <div class="part-model-left">
+                    <p>WEIGHT(KG)</p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{item.weight}}</p>
+                </div>
+            </div>
+            <div class="part-name-modal">
+                <div class="part-model-left">
+                    <p> MRP(Rs)
+                    </p>
+                </div>
+                <span class="colon-modal">:</span>
+                <div class="part-model-right">
+                    <p>{{ (!userName)?item.mrp1:item.mrp1 }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 " *ngIf="item.image">
+            <img id="myImgN" src="assets/images/{{item.image}}" class="open-img">
+        </div>
+    </div>
+</div>

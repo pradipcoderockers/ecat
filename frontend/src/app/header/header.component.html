@@ -1,0 +1,154 @@
+<div class="main_head">
+  <div class="maininnerleft">
+    <figure>
+      <a [routerLink]="['/']">
+        <img src="assets/images/logo.png" alt="logo">
+      </a>
+    </figure>
+  </div>
+
+
+  <div class="maininnerright">
+    <div class="innerrighticon">
+      <span>
+        <a [routerLink]="['/fave']">FAVOURITE
+          <i class="fas fa-heart" style="color:red;"></i>
+        </a>
+      </span>
+      <span>
+        <a [routerLink]="['/cart']">CART
+          <i class="fas fa-shopping-cart"></i>
+        </a>
+      </span>
+      <span class="dropdown-profile">
+        <a [routerLink]="['/profile']" id="user-profile">
+          <i class="fas fa-user-circle"></i>
+        </a>
+        <div class="dropdown-content-user">
+          <a [routerLink]="['/order']" *ngIf="loginuser">My Order</a>
+          <a [routerLink]="['/fave']" *ngIf="loginuser">My Favourite List</a>
+          <a [routerLink]="['/profile']" *ngIf="loginuser">My Profile</a>
+          <a [routerLink]="['/userProfile']" *ngIf="!loginuser"> Create User Profile</a>
+          <a [routerLink]="['/login']" *ngIf="!loginuser">Login</a>
+          <a [routerLink]="['/logout']" *ngIf="loginuser">Log Out</a>
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+<div class="nav">
+  <span class="arrow">
+    <a *ngIf="router.url!='/'" class="fingerPoint" (click)="backClicked()">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+  </span>
+  <span class="home-icon">
+    <a href="/">
+      <i class="fas fa-home"></i>HOME</a>
+  </span>
+  <span  style="margin-left: 3%" class="category-icon">
+    <a *ngFor="let catbrud of catagoryService.topcat;  last as isLast" (click)="(!isLast)?selectBreadCrum(catbrud):''">{{catbrud.name?(!isLast)?catbrud.name+" /":catbrud.name:''}} </a>
+  </span>
+</div>
+<div class="main-box">
+  <div class="left-data">
+    <div class="category-left-side-title">CATEGORY</div>
+    <div class="list">
+      <ul>
+        <li *ngFor="let category of categories;" (click)="openSubCat($event, category)" class="fingerPoint">
+          <a>
+            <img src="../../assets/images/folder.png" alt="folder">{{category.name}}</a>
+        </li>
+        <li *ngIf="!categories;" class="fingerPoint">
+          <a>Loding..</a>
+        </li>
+      </ul>
+    </div>
+    <div class="form-box">
+      <div class="search-head">SEARCH BY</div>
+      <div class="category">
+        <div class="category-name">CATEGORY</div>
+        <div class="category-box">
+          <select [(ngModel)]="selectedCategory" class="select-form" (change)="loadSubCategory()">
+            <option [ngValue]="null" disabled>Select  Category</option>
+            <option *ngFor="let cat of categories" [ngValue]="cat">{{cat.name | uppercase}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="category">
+        <div class="category-name">SUB CATEGORY</div>
+        <div class="category-box">
+          <select [(ngModel)]="selectedSubCategory" class="select-form" (change)="loadSegment()">
+            <option value="" disabled selected>Select Sub Category</option>
+            <option *ngFor="let subcat of subCategories" [ngValue]="subcat.subcategory">{{subcat && subcat.subcategory.name | uppercase }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="category">
+        <div class="category-name">SEGMENT</div>
+        <div class="category-box">
+          <select [(ngModel)]="selectedSegment" class="select-form" (change)="loadSubSegment()">
+            <option value="" disabled selected>Select Segment</option>
+            <option *ngFor="let segment of segments" [ngValue]="segment.segment">{{segment.segment.name | uppercase }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="category">
+        <div class="category-name">SUB SEGMENT</div>
+        <div class="category-box">
+          <select [(ngModel)]="selectedSubSegment" class="select-form" (change)="loadLeafType()">
+            <option value="" disabled selected>Select Sub Segment</option>
+            <option *ngFor="let item of subSegments" [ngValue]="item.subsegment">{{item && item.subsegment.name | uppercase }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="category">
+        <div class="category-name">LEAFTYPE</div>
+        <div class="category-box">
+          <select [(ngModel)]="selectedLeafType" class="select-form" (change)="loadVechicle()">
+            <option value="" disabled selected>Select Leaf Type</option>
+            <option *ngFor="let item of leafType" [ngValue]="item && item.leaftype">{{item && item.leaftype &&  item.leaftype.name | uppercase }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="category">
+        <div class="category-name">VECHICLE</div>
+        <div class="category-box">
+          <select [(ngModel)]="selectedVechicle" class="select-form" (change)="loadLeafPosition()">
+            <option value="" disabled selected>Select Vechicle</option>
+            <option *ngFor="let item of vechicles" [ngValue]="item.vechicle">{{item && item.vechicle.name | uppercase }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="category">
+        <div class="category-name">LEAF POSITION</div>
+        <div class="category-box">
+          <select [(ngModel)]="selectedLeafPosition" class="select-form" (change)="loadVechicleModel()">
+            <option value="" disabled selected>Select Leaf Position</option>
+            <option *ngFor="let item of leafPosition" [ngValue]="item.leafposition">{{ item && item.leafposition.name | uppercase}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="category">
+        <div class="category-name">VECHICLE MODEL</div>
+        <div class="category-box">
+          <select [(ngModel)]="selectedVechiclemodel" class="select-form" (change)="loadProduct()">
+            <option value="" disabled selected>select a Brand</option>
+            <option *ngFor="let item of vechicleModel" [ngValue]="item.vechiclemodel">{{item && item.vechiclemodel.name | uppercase }}</option>
+          </select>
+        </div>
+      </div>
+      <p style="text-align: center; color: red; font-size: 1.5rem; font-weight: bold">OR</p>
+      <div class="category">
+        <div class="category-name">PRODUCT CODE </div>
+        <div class="category-box">
+          <input [(ngModel)]="itemCode" name="part-desc" type="text">
+        </div>
+      </div>
+      <div class="category btn-box">
+        <input type="button" id=" " value="SEARCH" (click)="filterCategory({code:itemCode},'item_code')" class="search btn-primary">
+        <input type="button" id=" " value="RESET" class="search btn-primary" (click)="resetSearch()" style="background: #424143;">
+      </div>
+    </div>
+  </div>
+</div>

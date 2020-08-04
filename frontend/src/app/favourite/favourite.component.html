@@ -1,0 +1,46 @@
+<div class="right-data">
+  <div class="main-box">
+    <div class="container">
+      <div class="table table-fav">
+        <div id="closealert" class="alert alert-{{alertClass}} fade in alert-dismissible" style="margin-top:18px;" [hidden]="!successmsg">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+          {{successmsg}}
+        </div>
+        <table width="100%">
+          <thead>
+            <tr>
+              <th>IMAGE</th>
+              <th>NAME</th>
+              <th>PRODUCT CODE</th>
+              <th>ADD TO CART</th>
+              <th>REMOVE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let fav of favouriteList">
+              <td>
+                <a class="fav-frame">
+                  <img src="assets/images/ecat/category/{{fav.product.category.code}}.png">
+                </a>
+              </td>
+              <td>
+                <a>{{fav.product.name?fav.product.name:'N/A'}}</a>
+              </td>
+              <td>
+                <a>{{fav.product.item_code}}</a>
+              </td>
+              <td>
+                <a class="fav-text" (click)="addToCart(fav)">
+                  <i class="fas fa-shopping-cart"></i>ADD TO CART</a>
+              </td>
+              <td>
+                <a class="fav-btn-remove" (click)="removeFromCart(fav)">REMOVE</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
