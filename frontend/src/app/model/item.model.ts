@@ -1,5 +1,6 @@
 export class Item {
     name: string;
+    id:number;
     item_code: string;
     variant: string;
     item_description: string;
@@ -31,5 +32,6 @@ export class Item {
     dbp4: string;
     dbp5: string;
     suitableFor: null
+    quantity:number
     }
     

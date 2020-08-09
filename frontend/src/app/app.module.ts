@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { ProductComponent } from './product/product.component';
-import { ItemComponent } from './item/item.component';
+// import { ItemComponent } from './item/item.component';
 import { LoginComponent } from './login/login.component';
 import { CategoryComponent } from './category/category.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
@@ -35,7 +35,6 @@ import { OrderModalComponent } from './modal/order-modal/order-modal.component';
 import { HomepageModalComponent } from './modal/homepage-modal/homepage-modal.component';
 import { FavouriteaddComponent } from './favouriteadd/favouriteadd.component';
 import { NgFlashMessagesModule } from 'ng-flash-messages';
-import { AssemblylistComponent } from './assemblylist/assemblylist.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 @NgModule({
@@ -44,7 +43,7 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
     HeaderComponent,
     HomeComponent,
     ProductComponent,
-    ItemComponent,
+    // ItemComponent,
     LoginComponent,
     CategoryComponent,
     BreadcrumComponent,
@@ -62,7 +61,6 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
 	OrderModalComponent,
 	HomepageModalComponent,
 	FavouriteaddComponent,
-	AssemblylistComponent,
 	VerifyEmailComponent,
   ],
   imports: [

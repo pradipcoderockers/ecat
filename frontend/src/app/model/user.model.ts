@@ -3,8 +3,8 @@ import { Role } from './role.model';
 export class User {
 
     id: number;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     username: string;
     password: string;
     permission: string;
@@ -17,6 +17,9 @@ export class User {
     pincode: string;
     contactNumber: string;
     emailId: string;
+    email: string;
+    password1: string;
+    password2: string;
     roles: Array<Object> = [];
     
 

@@ -6,7 +6,8 @@
           <thead>
             <tr>
               <th>IMAGE</th>
-              <th width="20%">NAME</th>
+              <th width="14%">NAME</th>
+              <th>VARIANT</th>
               <th>PRODUCT CODE</th>
               <th>QUANTITY</th>
               <th>UNIT PRICE</th>
@@ -14,15 +15,18 @@
               <th>REMOVE</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="cartItems">
             <tr *ngFor="let cart of cartItems">
               <td>
                 <a class="fav-frame">
                     <img src="assets/images/ecat/category/{{cart.product.category.code}}.png">
                 </a>
               </td>
-              <td width="20%">
+              <td width="15%">
                 <a>{{cart.product.name}}</a>
+              </td>
+              <td>
+                <a>{{cart.product.variant}}</a>
               </td>
               <td>
                 <a>{{cart.product.item_code}}</a>
@@ -56,7 +60,7 @@
         <div class="text-right">
           <div class="invoice-cart">
             <div class="invoice">
-              <a (click)=generateInvoice()>Generate Invoice</a>
+              <a (click)=generateInvoice()>Place Order</a>
             </div>
           </div>
         </div>

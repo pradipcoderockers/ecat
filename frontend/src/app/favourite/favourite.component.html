@@ -16,7 +16,7 @@
               <th>REMOVE</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="favouriteList.length>0" >
             <tr *ngFor="let fav of favouriteList">
               <td>
                 <a class="fav-frame">
@@ -39,6 +39,7 @@
             </tr>
           </tbody>
         </table>
+        <div *ngIf="favouriteList.length==0" ><p style="margin-top:20px;text-align: center">Your favorite list is empty!</p></div>
       </div>
     </div>
   </div>

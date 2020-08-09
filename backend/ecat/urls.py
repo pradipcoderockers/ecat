@@ -25,6 +25,7 @@ from accounts.views import CustomRegisterView, CurrentUserView
 from django.utils.translation import ugettext_lazy as _
 admin.site.site_header = _("E-Catelog Administration")
 admin.site.site_title = _("E-Catelog Admin")
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url('api/admin/', admin.site.urls),
@@ -43,3 +44,7 @@ urlpatterns = [
 ]
 
 urlpatterns += staticfiles_urlpatterns()
+
+urlpatterns += [
+    url('', TemplateView.as_view(template_name='index.html')),
+]

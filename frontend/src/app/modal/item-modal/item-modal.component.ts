@@ -3,7 +3,6 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Item } from 'src/app/model/item.model';
 import { AddCartItemRequest } from 'src/app/model/add-cart-item-request.model';
 import { CatagoryService } from 'src/app/service/catagory.service';
-//import { NgFlashMessageService } from 'ng-flash-messages';
 
 
 @Component({
@@ -17,7 +16,6 @@ export class ItemModalComponent implements OnInit {
    successmsg : string;
   alertClass : string;  
   constructor(public activeModal: NgbActiveModal, private service:CatagoryService ) {}
-   //, private ngFlashMessageService: NgFlashMessageService
 
   ngOnInit() {
   }
@@ -28,8 +26,8 @@ export class ItemModalComponent implements OnInit {
   addToCart(item: Item,qty:number,pro){
     let cartReq = new AddCartItemRequest();
     let userName = window.localStorage.getItem('userName');
-    cartReq.itemId = item.id;
-    cartReq.qty = qty;
+    cartReq.product_id = item.id;
+    cartReq.quantity = qty;
 	cartReq.pro = pro;
 	var quntityp =  (qty);
    if (quntityp>0) 
@@ -45,19 +43,6 @@ export class ItemModalComponent implements OnInit {
 			 this.alertClass = "success"; 
 				this.successmsg = "Added to cart";
 				setTimeout(()=>{   this.successmsg = ''; }, 6000);
-			  /*
-			   this.ngFlashMessageService.showFlashMessage({
-				  // Array of messages each will be displayed in new line
-				  messages: ["Added to cart"], 
-				  // Whether the flash can be dismissed by the user defaults to false
-				  dismissible: true, 
-				  // Time after which the flash disappears defaults to 2000ms
-				  timeout: false,
-				  // Type of flash message, it defaults to info and success, warning, danger types can also be used
-				  type: 'success'
-				});
-				*/
-				
 			  this.activeModal.dismiss();
 			});
 		  });

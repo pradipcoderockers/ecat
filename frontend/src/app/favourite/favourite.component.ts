@@ -4,6 +4,7 @@ import { CartItem } from '../model/cart-item.model';
 import { Router } from '@angular/router';
 import { Favouriteadd } from '../model/favouriteadd.model';
 import { AddCartItemRequest } from '../model/add-cart-item-request.model';
+import { Item } from 'src/app/model/item.model';
 
 
 @Component({
@@ -17,6 +18,8 @@ export class FavouriteComponent implements OnInit {
   total: number = 0;
   favouriteList: Favouriteadd;
   listdata: string;
+  alertClass : string
+  successmsg : String
   constructor(private service: CatagoryService, private router: Router) { }
   ngOnInit() {
     window.localStorage.setItem('breadcrum', '');
@@ -32,7 +35,7 @@ export class FavouriteComponent implements OnInit {
       });
     });
   }
-  addToCart(item: Item, type, pro, fvrtid) {
+  addToCart(item:any, type, pro, fvrtid) {
     let userName = window.localStorage.getItem('token');
     if (!userName) {
       this.alertClass = "info";
@@ -47,7 +50,7 @@ export class FavouriteComponent implements OnInit {
     if (quntityp > 0) {
       let cartReq = new AddCartItemRequest();
       cartReq.product_id = item.product.id;
-      cartReq.quantity = parseInt(quntityp);
+      cartReq.quantity = quntityp;
       if (userName != null && userName != undefined) {
         this.service.postCart(cartReq).subscribe(data => {
           this.alertClass = "success";

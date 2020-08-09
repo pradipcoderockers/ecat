@@ -26,7 +26,7 @@ class ProductList(generics.ListCreateAPIView):
     
     def get_queryset(self):
         page = self.request.query_params.get('page')
-        page_size = self.request.query_params.get('page_size')
+        page_size = self.request.query_params.get('page_size',100)
         if page is not None:
             pagination.PageNumberPagination.page = page
             
@@ -34,9 +34,6 @@ class ProductList(generics.ListCreateAPIView):
             pagination.PageNumberPagination.page_size = page_size
 
         queryset = Product.objects.filter(status="1")
-        product_type = self.request.query_params.get('product_type')
-        if product_type is not None:
-            queryset = queryset.filter(leaf_desc = product_type)
 
         category = self.request.query_params.get('category')
         if category is not None:
@@ -53,14 +50,13 @@ class ProductList(generics.ListCreateAPIView):
         segment = self.request.query_params.get('segment')
         if segment is not None:
             pass
-            #queryset = queryset.filter(Q(segment__code__contains = segment))
+            queryset = queryset.filter(Q(segment__code__contains = segment))
 
         subsegment = self.request.query_params.get('subsegment')
         if subsegment is not None:
             pass
-            #queryset = queryset.filter(Q(subsegment__code__contains = subsegment))
+            queryset = queryset.filter(Q(subsegment__code__contains = subsegment))
         
-        #print("leaftype",queryset) 
         leaftype = self.request.query_params.get('leaftype')
         if leaftype is not None:
             queryset = queryset.filter(leaftype__code__contains = leaftype)

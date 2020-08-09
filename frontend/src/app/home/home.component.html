@@ -41,7 +41,7 @@
       <div class="product-segment-center">
         <div class="row">
           <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 hover" *ngFor="let cat of categories">
-            <div class="car-model-box" (click)="openSubCat($event,cat)">
+            <div *ngIf="cat.code!=null" class="car-model-box" (click)="openSubCat($event,cat)">
               <a>
                 <figure>
                   <img src="assets/images/ecat/category/{{cat.code}}.png" alt="">

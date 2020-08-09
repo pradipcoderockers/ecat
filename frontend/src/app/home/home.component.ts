@@ -22,11 +22,11 @@ export class HomeComponent implements OnInit {
   }
   closeResult: string;
   images = ['../../assets/images/slider-1.jpg', '../../assets/images/slider-2.jpg', '../../assets/images/slider-3.jpg']
-  categories: Category[];
+  categories: Category;
   segment: Category;
   segments: Category[];
   brands: Category[];
-  models: Category[];
+  models: Category;
   dtTrigger: Subject<Category> = new Subject();
   ngOnInit() {
     let token = window.localStorage.getItem('token');
@@ -52,12 +52,12 @@ export class HomeComponent implements OnInit {
   };
 
   loadCategory() {
-    this.catagoryService.getRootTopCategories().subscribe(data => {
+    this.catagoryService.getRootTopCategories().subscribe((data:any) => {
       this.categories = data;
       this.segments = data;
     });
 
-    this.catagoryService.brandsVihcleCategories().subscribe(data => {
+    this.catagoryService.brandsVihcleCategories().subscribe((data:any) => {
       this.models = data;
     });
   }

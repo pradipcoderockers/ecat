@@ -10,12 +10,6 @@ import { Item } from '../model/item.model';
 import { NgbModal, ModalDismissReasons, NgbModalRef, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddCartItemRequest } from '../model/add-cart-item-request.model';
 import { Favouriteadd } from '../model/favouriteadd.model';
-//import { NgFlashMessageService } from 'ng-flash-messages';
-// var $ = require('jquery');
-//  var dt = require('datatables.net');
-// declare var $;
-
-
 
 @Component({
   selector: 'app-product',
@@ -54,7 +48,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 20
+      pageLength: 10,
+      
     };
 
     this.route.queryParams.subscribe(params => {
@@ -72,7 +67,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   closeResult: string;
 
   openN(content, item: Item) {
-    console.log(item)
     const modal: NgbModalRef = this.modalService.open(ItemModalComponent);
     modal.componentInstance.item = item;
     modal.result.then((result) => {
@@ -97,7 +91,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     if (quntityp > 0) {
       let cartReq = new AddCartItemRequest();
       cartReq.product_id = item.id;
-      cartReq.quantity = parseInt(quntityp);
+      cartReq.quantity = quntityp;
       if (userName != null && userName != undefined) {
         this.service.postCart(cartReq).subscribe(data => {
           this.alertClass = "success";

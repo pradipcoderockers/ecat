@@ -30,9 +30,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'h872gf#sj!*nisdJKGbd')
 DEBUG = True
 FRONTEND_HOST = os.getenv('FRONTEND_HOST', default='localhost:4200')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['ecat.jaispring.com','localhost','127.0.0.1']
 # REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#     'DEFAULT_AUTHENTICATION_CLASSS': (
 #         'rest_framework.authentication.TokenAuthentication',
 #     ),
 #     'DEFAULT_PERMISSION_CLASSES': (
@@ -85,10 +85,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'ecat.urls'
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 ROLEPERMISSIONS_REGISTER_ADMIN = False
+TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join("templates")
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -100,6 +104,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'ecat.wsgi.application'
 

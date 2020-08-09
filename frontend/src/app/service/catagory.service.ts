@@ -14,9 +14,7 @@ export class CatagoryService {
 	
 	topcat: [];
 
-  deleteCart(id: any,type: any,): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(this.baseUrl+"/cart/"+ id+"/"+type)
-  }
+  
   deleteCartItem(arg0: { "userId": number; "itemId": number; "page_type": string;}): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl+"/cart/deleteItem", arg0);
   }
@@ -58,7 +56,7 @@ export class CatagoryService {
   apiPath: string = '/category';
 
   createOrder(): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl +'/api/orders' );
+    return this.http.post<ApiResponse>(this.baseUrl +'/api/orders',{} );
   } 
   getOrders(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.baseUrl +'/api/orders' );
@@ -155,7 +153,7 @@ export class CatagoryService {
   deleteFavourite(id): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(this.baseUrl+"/api/favourite/"+id);
   }
-  postFavourite(data: any,id: number): Observable<ApiResponse> {
+  postFavourite(data: any): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl+"/api/favourite",data);
   }
 

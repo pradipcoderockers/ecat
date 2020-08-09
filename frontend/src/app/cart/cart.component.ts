@@ -14,7 +14,6 @@ export class CartComponent implements OnInit {
   total: number = 0;
   userMrp : {}
   constructor(private service: CatagoryService, private router: Router) { }
-
   ngOnInit() {
     window.localStorage.setItem('breadcrum', '');
     this.service.topcat = (window.localStorage.getItem('breadcrum')) ? JSON.parse(window.localStorage.getItem('breadcrum')) : [];
@@ -28,21 +27,26 @@ export class CartComponent implements OnInit {
     if (userName != null && userName != undefined) {
       this.service.getCart().subscribe(data => {
         this.cartItems = data.results;
-        for (let cart of data.results) {
-          this.total = this.total + cart.quantity * cart.product[this.userMrp];
+        for (let cart  of data.results) {
+          if(this.userMrp=='mrp1'){
+            this.total = this.total + cart.quantity * cart.product.mrp1;
+          }
+          else
+          {
+            this.total = this.total + cart.quantity * cart.product.dbp1;
+          }
         }
       });
+    }
+    else
+    {
+      this.cartItems = []
     }
   }
 
   updateQty(item, ele) {
     let index = this.cartItems.indexOf(item);
     this.cartItems[index].qty = ele;
-    this.total = this.total + item[this.userMrp];
-
-    // console.log(index);
-    // console.log(item);
-    // console.log(ele);
   }
 
   removeFromCart(cartItem: CartItem) {
@@ -56,7 +60,13 @@ export class CartComponent implements OnInit {
         this.service.getCart().subscribe(data => {
           this.cartItems = data.results;
           for (let cart of data.results) {
-            this.total = this.total + cart.quantity * cart.product[this.userMrp];
+            if(this.userMrp=='mrp1'){
+              this.total = this.total + cart.quantity * cart.product.mrp1;
+            }
+            else
+            {
+              this.total = this.total + cart.quantity * cart.product.dbp1;
+            }
           }
         });
       }
@@ -67,7 +77,7 @@ export class CartComponent implements OnInit {
     let userName = window.localStorage.getItem('token');
     if (userName != null && userName != undefined && this.cartItems.length>0) {
         this.service.createOrder().subscribe(data => {
-            alert("Checkout complete");
+            alert("Your order has been successfully placed");
             this.router.navigate(['']);
         });
     }

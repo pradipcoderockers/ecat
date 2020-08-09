@@ -44,6 +44,7 @@ export class UserProfileComponent implements OnInit {
       },
       error => {
         alert("Please verify your email or password");
+        this.router.navigate(['/']);
       },
       () => {
          this.router.navigate(['/']);
