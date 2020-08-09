@@ -156,7 +156,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 DATA_VOLUME = os.getenv('DATA_VOLUME', '/data')
-STATIC_URL = '/api/static/'
+STATIC_URL = '/assets/'
 STATIC_ROOT = f'{DATA_VOLUME}/staticserve'
 MEDIA_URL = '/api/media/'
 MEDIA_ROOT =f'{DATA_VOLUME}/uploads'
@@ -205,3 +205,5 @@ def extend_list_avoid_repeats(list_to_extend, extend_with):
     """Extends the first list with the elements in the second one, making sure its elements are not already there in the
     original list."""
     list_to_extend.extend(filter(lambda x: not list_to_extend.count(x), extend_with))
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, '../../staticfiles')] 
