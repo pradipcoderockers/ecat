@@ -28,3 +28,4 @@ django-allauth==0.41.0
 django-smtp-ssl==1.0
 django-ses==0.8.10
 drf-api-tracking==1.6.0
+python-decouple==3.1

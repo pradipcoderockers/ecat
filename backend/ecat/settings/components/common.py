@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'h872gf#sj!*nisdJKGbd')
 DEBUG = True
 FRONTEND_HOST = os.getenv('FRONTEND_HOST', default='localhost:4200')
 
-ALLOWED_HOSTS = ['ecat.jaispring.com','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['ecat.jaispring.com','localhost','127.0.0.1','34.68.23.11']
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSS': (
 #         'rest_framework.authentication.TokenAuthentication',
