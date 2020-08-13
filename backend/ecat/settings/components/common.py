@@ -108,7 +108,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecat.wsgi.application'
 
-ACCOUNT_EMAIL_SUBJECT_PREFIX  = 'Carte de Legitimation '
+ACCOUNT_EMAIL_SUBJECT_PREFIX  = 'E-Catelog Jai Spring '
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
@@ -192,7 +192,7 @@ AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
 
 # SES configs
 EMAIL_BACKEND = 'django_ses.SESBackend'
-DEFAULT_FROM_EMAIL = 'Carte de Legitimation <noreply@unicc.biz>'
+DEFAULT_FROM_EMAIL = 'E-Catelog Jai Spring <noreply@jaispring.com>'
 DEFAULT_TO_EMAIL = os.getenv('DEFAULT_TO_EMAIL', '')
 AWS_SES_REGION_NAME = os.getenv('AWS_SES_REGION_NAME', '')
 AWS_SES_REGION_ENDPOINT = os.getenv('AWS_SES_REGION_ENDPOINT', '')

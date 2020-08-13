@@ -70,4 +70,13 @@ export class HomeComponent implements OnInit {
     window.localStorage.setItem('breadcrum',JSON.stringify(breadcrum))
     this.router.navigate(['home'], { queryParams: { category: cat.code } });
   }
+  openBrand(event, cat: Category) {
+    let breadcrum = []
+    let newBreadCrum = cat
+    newBreadCrum['type'] ='vechicle'
+    breadcrum.push(newBreadCrum)
+    window.localStorage.setItem('breadcrum',JSON.stringify(breadcrum))
+    this.router.navigate(['products'], { queryParams: {category:'leafspring',vechicle: cat.code } });
+  }
+  
 }

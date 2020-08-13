@@ -7,4 +7,8 @@ class DefaultAccountAdapterCustom(DefaultAccountAdapter):
         protocol = 'http' if settings.DEBUG else 'https'
         context['activate_url'] = protocol + '://' + settings.FRONTEND_HOST + '/verify-email/' + context['key']
         msg = self.render_mail(template_prefix, email, context)
-        msg.send()
+        try:
+            msg.send()
+        except:
+            print("An exception occurred")
+        
