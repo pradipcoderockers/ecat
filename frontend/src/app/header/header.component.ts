@@ -41,65 +41,327 @@ export class HeaderComponent implements OnInit {
 
 	ngOnInit() {
 		this.loginuser = (window.localStorage.getItem('token')) ? true : false;
-		this.loadCategory();
 		this.catagoryService.topcat = this.breadcrum = (window.localStorage.getItem('breadcrum')) ? JSON.parse(window.localStorage.getItem('breadcrum')) : [];
-	}
+		this.route.queryParams.subscribe(params => {
+			let category = params['category'] ? params['category'] : "default"
+			let subcategory = params['subcategory'] ? params['subcategory'] : ""
+			let segment = params['segment'] ? params['segment'] : ""
+			let subsegment = params['subsegment'] ? params['subsegment'] : ""
+			let leaftype = params['leaftype'] ? params['leaftype'] : ""
+			let vechicle = params['vechicle'] ? params['vechicle'] : ""
+			let leafposition = params['leafposition'] ? params['leafposition'] : ""
+			let vechiclemodel = params['vechiclemodel'] ? params['vechiclemodel'] : ""
+			if (vechiclemodel && leafposition && vechicle && leaftype && subsegment && segment && subcategory && category) {
+				this.loadVechicleModelInit(category, subcategory, segment, subsegment, leaftype, vechicle, leafposition, vechiclemodel)
+			}
+			else if (leafposition && vechicle && leaftype && subsegment && segment && subcategory && category) {
+				this.loadLeafPositionInit(category, subcategory, segment, subsegment, leaftype, vechicle, leafposition)
+			}
+			else if (vechicle && leaftype && subsegment && segment && subcategory && category) {
+				this.loadVechicleInit(category, subcategory, segment, subsegment, leaftype, vechicle)
+			}
+			else if (leaftype && subsegment && segment && subcategory && category) {
+				this.loadLeafTypeInit(category, subcategory, segment, subsegment, leaftype)
+			}
+			else if (subsegment && segment && subcategory && category) {
+				this.loadSubSegmentInit(category, subcategory, segment, subsegment)
 
-	loadCategory() {
+			}
+			else if (segment && subcategory && category) {
+				this.loadSegmentInit(category, subcategory, segment)
+			}
+			else if (subcategory && category) {
+				this.loadSubCategoryInit(category, subcategory)
+			}
+			else if (category) {
+				this.loadCategory(category)
+			}
+		});
+
+	}
+	loadCategory(category) {
 		this.catagoryService.getRootTopCategories().subscribe((data: any) => {
 			this.categories = data;
+			var index = this.categories.map(function (e) { return e.code; }).indexOf(category);
+			this.selectedCategory = this.categories[index]
+			this.catagoryService.getSubcategory(this.selectedCategory.code).subscribe((data: any) => {
+				this.subCategories = data;
+			});
 		});
 	}
+
+	loadSubCategoryInit(category, subcategory) {
+		this.catagoryService.getRootTopCategories().subscribe((data: any) => {
+			this.categories = data;
+			var index = this.categories.map(function (e) { return e.code; }).indexOf(category);
+			this.selectedCategory = this.categories[index]
+			this.catagoryService.getSubcategory(category).subscribe((data: any) => {
+				this.subCategories = data;
+				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
+				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
+				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+					this.segments = data;
+				});
+			});
+		});
+	}
+
+	loadSegmentInit(category, subcategory, segment) {
+		this.catagoryService.getRootTopCategories().subscribe((data: any) => {
+			this.categories = data;
+			var index = this.categories.map(function (e) { return e.code; }).indexOf(category);
+			this.selectedCategory = this.categories[index]
+			this.catagoryService.getSubcategory(category).subscribe((data: any) => {
+				this.subCategories = data;
+				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
+				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
+				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+					this.segments = data;
+					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
+					this.selectedSegment = this.segments[segmentIndex]['segment']
+					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+						this.subSegments = data;
+					});
+				});
+			});
+		});
+	}
+
+
+	loadSubSegmentInit(category, subcategory, segment, subsegment) {
+		this.catagoryService.getRootTopCategories().subscribe((data: any) => {
+			this.categories = data;
+			var index = this.categories.map(function (e) { return e.code; }).indexOf(category);
+			this.selectedCategory = this.categories[index]
+			this.catagoryService.getSubcategory(category).subscribe((data: any) => {
+				this.subCategories = data;
+				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
+				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
+				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+					this.segments = data;
+					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
+					this.selectedSegment = this.segments[segmentIndex]['segment']
+					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+						this.subSegments = data;
+						var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
+						this.selectedSubSegment = this.subSegments[subSegmentIndex]['subsegment']
+						this.catagoryService.getLeaftype(subsegment).subscribe((data: any) => {
+							this.leafType = data;
+						});
+
+					});
+				});
+			});
+		});
+	}
+
+	loadLeafTypeInit(category, subcategory, segment, subsegment, leaftype) {
+		this.catagoryService.getRootTopCategories().subscribe((data: any) => {
+			this.categories = data;
+			var index = this.categories.map(function (e) { return e.code; }).indexOf(category);
+			this.selectedCategory = this.categories[index]
+			this.catagoryService.getSubcategory(category).subscribe((data: any) => {
+				this.subCategories = data;
+				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
+				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
+				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+					this.segments = data;
+					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
+					this.selectedSegment = this.segments[segmentIndex]['segment']
+					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+						this.subSegments = data;
+						var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
+						this.selectedSubSegment = this.subSegments[subSegmentIndex]['subsegment']
+						this.catagoryService.getLeaftype(subsegment).subscribe((data: any) => {
+							this.leafType = data;
+							var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
+							this.selectedLeafType = this.leafType[leafTypeIndex]['leaftype']
+							this.catagoryService.getVechicle(leaftype).subscribe((data: any) => {
+								this.vechicles = data;
+							});
+						});
+
+					});
+				});
+			});
+		});
+	}
+
+
+	loadVechicleInit(category, subcategory, segment, subsegment, leaftype, vechicle) {
+		this.catagoryService.getRootTopCategories().subscribe((data: any) => {
+			this.categories = data;
+			var index = this.categories.map(function (e) { return e.code; }).indexOf(category);
+			this.selectedCategory = this.categories[index]
+			this.catagoryService.getSubcategory(category).subscribe((data: any) => {
+				this.subCategories = data;
+				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
+				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
+				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+					this.segments = data;
+					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
+					this.selectedSegment = this.segments[segmentIndex]['segment']
+					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+						this.subSegments = data;
+						var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
+						this.selectedSubSegment = this.subSegments[subSegmentIndex]['subsegment']
+						this.catagoryService.getLeaftype(subsegment).subscribe((data: any) => {
+							this.leafType = data;
+							var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
+							this.selectedLeafType = this.leafType[leafTypeIndex]['leaftype']
+							this.catagoryService.getVechicle(leaftype).subscribe((data: any) => {
+								this.vechicles = data;
+								var vechicleIndex = data.map(function (e) { return e.vechicle.code; }).indexOf(vechicle);
+								this.selectedVechicle = this.vechicles[vechicleIndex]['vechicle']
+								this.catagoryService.getLeafposition(vechicle).subscribe((data: any) => {
+									this.leafPosition = data;
+								});
+							});
+						});
+					});
+				});
+			});
+		});
+	}
+
+	loadLeafPositionInit(category, subcategory, segment, subsegment, leaftype, vechicle, leafposition) {
+		this.catagoryService.getRootTopCategories().subscribe((data: any) => {
+			this.categories = data;
+			var index = this.categories.map(function (e) { return e.code; }).indexOf(category);
+			this.selectedCategory = this.categories[index]
+			this.catagoryService.getSubcategory(category).subscribe((data: any) => {
+				this.subCategories = data;
+				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
+				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
+				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+					this.segments = data;
+					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
+					this.selectedSegment = this.segments[segmentIndex]['segment']
+					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+						this.subSegments = data;
+						var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
+						this.selectedSubSegment = this.subSegments[subSegmentIndex]['subsegment']
+						this.catagoryService.getLeaftype(subsegment).subscribe((data: any) => {
+							this.leafType = data;
+							var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
+							this.selectedLeafType = this.leafType[leafTypeIndex]['leaftype']
+							this.catagoryService.getVechicle(leaftype).subscribe((data: any) => {
+								this.vechicles = data;
+								var vechicleIndex = data.map(function (e) { return e.vechicle.code; }).indexOf(vechicle);
+								this.selectedVechicle = this.vechicles[vechicleIndex]['vechicle']
+								this.catagoryService.getLeafposition(vechicle).subscribe((data: any) => {
+									this.leafPosition = data;
+									var leafPostionIndex = data.map(function (e) { return e.leafposition.code; }).indexOf(leafposition);
+									this.selectedLeafPosition = this.leafPosition[leafPostionIndex]['leafposition']
+									this.catagoryService.getVechiclemodel(leafposition).subscribe((data: any) => {
+										this.vechicleModel = data;
+									});
+								});
+							});
+						});
+					});
+				});
+			});
+		});
+	}
+
+	loadVechicleModelInit(category, subcategory, segment, subsegment, leaftype, vechicle, leafposition, vechiclemodel) {
+		this.catagoryService.getRootTopCategories().subscribe((data: any) => {
+			this.categories = data;
+			var index = this.categories.map(function (e) { return e.code; }).indexOf(category);
+			this.selectedCategory = this.categories[index]
+			this.catagoryService.getSubcategory(category).subscribe((data: any) => {
+				this.subCategories = data;
+				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
+				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
+				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+					this.segments = data;
+					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
+					this.selectedSegment = this.segments[segmentIndex]['segment']
+					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+						this.subSegments = data;
+						var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
+						this.selectedSubSegment = this.subSegments[subSegmentIndex]['subsegment']
+						this.catagoryService.getLeaftype(subsegment).subscribe((data: any) => {
+							this.leafType = data;
+							var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
+							this.selectedLeafType = this.leafType[leafTypeIndex]['leaftype']
+							this.catagoryService.getVechicle(leaftype).subscribe((data: any) => {
+								this.vechicles = data;
+								var vechicleIndex = data.map(function (e) { return e.vechicle.code; }).indexOf(vechicle);
+								this.selectedVechicle = this.vechicles[vechicleIndex]['vechicle']
+								this.catagoryService.getLeafposition(vechicle).subscribe((data: any) => {
+									this.leafPosition = data;
+									var leafPostionIndex = data.map(function (e) { return e.leafposition.code; }).indexOf(leafposition);
+									this.selectedLeafPosition = this.leafPosition[leafPostionIndex]['leafposition']
+									this.catagoryService.getVechiclemodel(leafposition).subscribe((data: any) => {
+										this.vechicleModel = data;
+										var vechiclemodelIndex = data.map(function (e) { return e.vechiclemodel.code; }).indexOf(vechiclemodel);
+									    this.selectedVechiclemodel = this.vechicleModel[vechiclemodelIndex]['vechiclemodel']
+									});
+								});
+							});
+						});
+					});
+				});
+			});
+		});
+	}
+
 
 	loadSubCategory() {
 		this.catagoryService.getSubcategory(this.selectedCategory.code).subscribe((data: any) => {
 			this.subCategories = data;
-			this.router.navigate(['home'], { queryParams: { category: this.selectedCategory.code } });
+			window.location.href = 'home?category=' + this.selectedCategory.code
 		});
 	}
 	loadSegment() {
-
-		this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
-			this.segments = data;
-			this.filterCategory(this.selectedSubCategory, 'subcategory')
-		});
+		if (this.selectedCategory && this.selectedSubCategory) {
+			window.location.href = 'home?category=' + this.selectedCategory.code + '&subcategory=' + this.selectedSubCategory.code
+		}
 	}
 
 	loadSubSegment() {
-		this.catagoryService.getSubSegment(this.selectedSegment.code).subscribe((data: any) => {
-			this.subSegments = data;
-			this.filterCategory(this.selectedSegment, 'segment')
-		});
+		if (this.selectedCategory && this.selectedSubCategory && this.selectedSegment) {
+			window.location.href = 'home?category=' + this.selectedCategory.code + '&subcategory=' + this.selectedSubCategory.code + '&segment=' + this.selectedSegment.code
+		}
+
 	}
 	loadLeafType() {
-		this.catagoryService.getLeaftype(this.selectedSubSegment.code).subscribe((data: any) => {
-			this.leafType = data;
-			this.filterCategory(this.selectedSubSegment, 'subsegment')
-		});
+		if (this.selectedCategory && this.selectedSubCategory && this.selectedSegment && this.selectedSubSegment) {
+			window.location.href = 'home?category=' + this.selectedCategory.code + '&subcategory=' + this.selectedSubCategory.code + '&segment=' + this.selectedSegment.code
+				+ '&subsegment=' + this.selectedSubSegment.code
+		}
+
 	}
 	loadVechicle() {
-		this.catagoryService.getVechicle(this.selectedLeafType.code).subscribe((data: any) => {
-			this.vechicles = data;
-			this.filterCategory(this.selectedLeafType, 'leaftype')
-		});
+		if (this.selectedCategory && this.selectedSubCategory && this.selectedSegment && this.selectedSubSegment && this.selectedLeafType) {
+			window.location.href = 'home?category=' + this.selectedCategory.code + '&subcategory=' + this.selectedSubCategory.code + '&segment=' + this.selectedSegment.code
+				+ '&subsegment=' + this.selectedSubSegment.code + '&leaftype=' + this.selectedLeafType.code
+		}
+
 	}
 
 	loadLeafPosition() {
-		this.catagoryService.getLeafposition(this.selectedVechicle.code).subscribe((data: any) => {
-			this.leafPosition = data;
-			this.filterCategory(this.selectedVechicle, 'vechicle')
-		});
+		if (this.selectedCategory && this.selectedSubCategory && this.selectedSegment && this.selectedSubSegment && this.selectedLeafType && this.selectedVechicle) {
+			window.location.href = 'home?category=' + this.selectedCategory.code + '&subcategory=' + this.selectedSubCategory.code + '&segment=' + this.selectedSegment.code
+				+ '&subsegment=' + this.selectedSubSegment.code + '&leaftype=' + this.selectedLeafType.code + '&vechicle=' + this.selectedVechicle.code
+		}
+		
 	}
 
 	loadVechicleModel() {
-		this.catagoryService.getVechiclemodel(this.selectedLeafPosition.code).subscribe((data: any) => {
-			this.vechicleModel = data;
-			this.filterCategory(this.selectedLeafPosition, 'leafposition')
-		});
+		if (this.selectedCategory && this.selectedSubCategory && this.selectedSegment && this.selectedSubSegment && this.selectedLeafType && this.selectedVechicle) {
+			window.location.href = 'home?category=' + this.selectedCategory.code + '&subcategory=' + this.selectedSubCategory.code + '&segment=' + this.selectedSegment.code
+				+ '&subsegment=' + this.selectedSubSegment.code + '&leaftype=' + this.selectedLeafType.code + '&vechicle=' + this.selectedVechicle.code+'&leafposition=' +this.selectedLeafPosition.code
+		}
 	}
 	loadProduct() {
-		console.log(this.selectedVechiclemodel)
-		this.filterCategory(this.selectedVechiclemodel, 'vechiclemodel')
+		if (this.selectedCategory && this.selectedSubCategory && this.selectedSegment && this.selectedSubSegment && this.selectedLeafType && this.selectedVechicle) {
+			window.location.href = 'home?category=' + this.selectedCategory.code + '&subcategory=' + this.selectedSubCategory.code + '&segment=' + this.selectedSegment.code
+				+ '&subsegment=' + this.selectedSubSegment.code + '&leaftype=' + this.selectedLeafType.code + '&vechicle=' + this.selectedVechicle.code+'&leafposition=' +this.selectedLeafPosition.code
+				+'&vechiclemodel='+this.selectedVechiclemodel.code
+		}
 	}
 
 	openSubCat(event, cat: Category, type) {
@@ -109,57 +371,16 @@ export class HeaderComponent implements OnInit {
 		window.location.href = '/home?category=' + cat.code
 	}
 
-	filterCategory(cat: Category, catType) {
-		this.route.queryParams.subscribe(params => {
-			let paramsList = {}
-			if (params['category']) {
-				paramsList['category'] = params['category']
-			}
-			if (catType == "subcategory" || params['subcategory']) {
-				paramsList['subcategory'] = params['subcategory'] ? params['subcategory'] : cat['code']
-			}
-			if (catType == "segment" || params['segment']) {
-				paramsList['segment'] = params['segment'] ? params['segment'] : cat['code']
-			}
-			if (catType == "subsegment" || params['subsegment']) {
-				paramsList['subsegment'] = params['subsegment'] ? params['subsegment'] : cat['code']
-			}
-			if (catType == "leaftype" || params['leaftype']) {
-				paramsList['leaftype'] = params['leaftype'] ? params['leaftype'] : cat['code']
-			}
-			if (catType == "vechicle" || params['vechicle']) {
-				paramsList['vechicle'] = params['vechicle'] ? params['vechicle'] : cat['code']
-			}
-			if (catType == "leafposition" || params['leafposition']) {
-				paramsList['leafposition'] = params['leafposition'] ? params['leafposition'] : cat['code']
-			}
-			if (catType == "vechiclemodel" || params['vechiclemodel']) {
-				paramsList['vechiclemodel'] = params['vechiclemodel'] ? params['vechiclemodel'] : cat['code']
-			}
-			if (catType == "vechiclemodel") {
-				this.router.navigate(['products'], { queryParams: paramsList });
-			}
-			if (catType == "item_code") {
-				paramsList['item_code'] = cat['code']
-				this.router.navigate(['products'], { queryParams: paramsList });
-			}
-			else {
-				this.router.navigate(['home'], { queryParams: paramsList });
-			}
-
-		});
-	}
-
 	selectBreadCrum(cat: Category) {
 		let newBreadCrum = []
 		if (cat) {
-			const result = this.catagoryService.topcat?this.catagoryService.topcat:[];
+			const result = this.catagoryService.topcat ? this.catagoryService.topcat : [];
 			var index = result.indexOf(cat)
 			if (index > -1) {
 				let url = window.location.href
 				for (let i = 0; i <= index; i++) {
 					let breadC = this.catagoryService.topcat[i]
-					 newBreadCrum.push(breadC)
+					newBreadCrum.push(breadC)
 				}
 				window.localStorage.setItem('breadcrum', JSON.stringify(newBreadCrum))
 				let replaceName = cat.type + "=" + cat.code
@@ -178,7 +399,7 @@ export class HeaderComponent implements OnInit {
 		this.catagoryService.topcat = (window.localStorage.getItem('breadcrum')) ? JSON.parse(window.localStorage.getItem('breadcrum')) : [];
 	}
 
-	backClicked(){
+	backClicked() {
 		window.history.go(-1)
 	}
 
