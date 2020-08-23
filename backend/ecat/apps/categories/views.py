@@ -56,7 +56,7 @@ class SegmentList(generics.ListCreateAPIView):
     def get_queryset(self):
         code = self.request.query_params.get('code')
         subcategory = SubCategory.objects.filter(code=code)
-        if subcategory is not None:
+        if subcategory.exists():
             subcategoryObj = subcategory.last()
             queryset = Product.objects.filter(subcategory_id=subcategoryObj.id).distinct('segment__id')
             return queryset
@@ -69,7 +69,7 @@ class SubSegmentList(generics.ListCreateAPIView):
     def get_queryset(self):
         code = self.request.query_params.get('code')
         segment = Segment.objects.filter(code=code)
-        if segment is not None:
+        if segment.exists():
             segmentObj = segment.last()
             queryset = Product.objects.filter(segment_id=segmentObj.id).distinct('subsegment__id')
             return queryset
@@ -82,7 +82,7 @@ class LeafTypeList(generics.ListCreateAPIView):
     def get_queryset(self):
         code = self.request.query_params.get('code')
         subsegment = SubSegment.objects.filter(code=code)
-        if subsegment is not None:
+        if subsegment.exists():
             subsegmentObj = subsegment.last()
             queryset = Product.objects.filter(subsegment_id=subsegmentObj.id).distinct('leaftype__id')
             return queryset
@@ -95,7 +95,7 @@ class VechicleList(generics.ListCreateAPIView):
     def get_queryset(self):
         code = self.request.query_params.get('code')
         leafType = LeafType.objects.filter(code=code)
-        if leafType is not None:
+        if leafType.exists():
             leafTypeObj = leafType.last()
             queryset = Product.objects.filter(leaftype_id=leafTypeObj.id).distinct('vechicle__id')
             return queryset
@@ -118,7 +118,7 @@ class LeafPositionList(generics.ListCreateAPIView):
     def get_queryset(self):
         code = self.request.query_params.get('code')
         vechicle = Vechicle.objects.filter(code=code)
-        if vechicle is not None:
+        if vechicle.exists():
             vechicleObj = vechicle.last()
             queryset = Product.objects.filter(vechicle_id=vechicleObj.id).distinct('leafposition__id')
             return queryset                            
@@ -132,7 +132,7 @@ class VechicleModelList(generics.ListCreateAPIView):
     def get_queryset(self):
         code = self.request.query_params.get('code')
         leafPosition = LeafPosition.objects.filter(code=code)
-        if leafPosition is not None:
+        if leafPosition.exists():
             leafPositionObj = leafPosition.last()
             queryset = Product.objects.filter(leafposition_id=leafPositionObj.id).distinct('vechiclemodel__id')
             return queryset
