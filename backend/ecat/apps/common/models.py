@@ -19,6 +19,7 @@ class State(models.Model):
     ]
     code  = models.CharField(default=True,null=True,max_length=200)
     name = models.CharField(default=True,null=True,max_length=200)
+    depo_email = models.TextField(default=True,null=True)
     mrp = models.CharField(
         max_length=4,
         choices=MRP,
@@ -29,3 +30,5 @@ class State(models.Model):
         choices=DBP,
         default='DBP1',
     )
+    def __str__(self):
+        return self.name

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import sys
+from decouple import config
 
 from django.urls import reverse_lazy
 
@@ -68,7 +69,6 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_ID = 1
 
 MIDDLEWARE = [
@@ -190,13 +190,6 @@ AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
 
 
-# SES configs
-EMAIL_BACKEND = 'django_ses.SESBackend'
-DEFAULT_FROM_EMAIL = 'E-Catelog Jai Spring <noreply@jaispring.com>'
-DEFAULT_TO_EMAIL = os.getenv('DEFAULT_TO_EMAIL', '')
-AWS_SES_REGION_NAME = os.getenv('AWS_SES_REGION_NAME', '')
-AWS_SES_REGION_ENDPOINT = os.getenv('AWS_SES_REGION_ENDPOINT', '')
-
 REST_AUTH_REGISTER_SERIALIZERS = {
     "REGISTER_SERIALIZER": "accounts.serializers.CustomRegisterSerializer",
 }
@@ -206,4 +199,12 @@ def extend_list_avoid_repeats(list_to_extend, extend_with):
     original list."""
     list_to_extend.extend(filter(lambda x: not list_to_extend.count(x), extend_with))
 
+# Sendgrid SMTP for email
+
+EMAIL_HOST          = config("EMAIL_HOST")
+EMAIL_PORT          = config("EMAIL_PORT")
+EMAIL_HOST_USER     = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS       = True
+EMAIL_USE_SSL       = False
 STATICFILES_DIRS = [os.path.join(BASE_DIR, '../../staticfiles')] 

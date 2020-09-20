@@ -38,3 +38,4 @@ class CustomUserAdmin(UserAdmin):
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(UserProfile)

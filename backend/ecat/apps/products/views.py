@@ -17,6 +17,9 @@ from orders.serializers import OrderSerializer, OrderDetailSerializer
 from orders.models  import Order, OrderDetail
 import random
 import datetime
+from products.helper import *
+import os
+from decouple import config
 
 # Create your views here.
 class ProductList(generics.ListCreateAPIView):
@@ -110,31 +113,31 @@ class FavouriteDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Favourite.objects.all()
     serializer_class = FavouriteSerializer        
 
-class OrderList(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer 
-    def get_queryset(self):
-        return self.queryset.filter(user_id= self.request.user.id)
+# class OrderList(generics.ListCreateAPIView):
+#     permission_classes = (IsAuthenticated,)
+#     queryset = Order.objects.all()
+#     serializer_class = OrderSerializer 
+#     def get_queryset(self):
+#         return self.queryset.filter(user_id= self.request.user.id)
         
-    def post(self, request, *args, **kwargs): 
-        cartList = Cart.objects.filter(user_id=self.request.user.id)
-        sampleStr = "ABCDEFGHIGKLMNOPQRSTUVWXYZ123456789"
-        char_list = list(sampleStr)
-        # shuffle list
-        random.shuffle(char_list)
-        # convert list to string
-        finalStr = ''.join(char_list)
-        order, created = Order.objects.get_or_create(orderId = finalStr,  total = 0, user = self.request.user,addedon = datetime.datetime.now())
-        totalPrice = 0
-        if cartList.exists():
-            for cart in cartList:
-                totalPrice = totalPrice+int(cart.product.mrp1)
-                OrderDetail.objects.create(order = order,  product_id = cart.product_id, quantity = cart.quantity, user = self.request.user,addedon = datetime.datetime.now())
-                cart.delete()
-        order.total = totalPrice  
-        order.save()      
-        return Response('created')
+#     def post(self, request, *args, **kwargs): 
+#         cartList = Cart.objects.filter(user_id=self.request.user.id)
+#         sampleStr = "ABCDEFGHIGKLMNOPQRSTUVWXYZ123456789"
+#         char_list = list(sampleStr)
+#         # shuffle list
+#         random.shuffle(char_list)
+#         # convert list to string
+#         finalStr = ''.join(char_list)
+#         order, created = Order.objects.get_or_create(orderId = finalStr,  total = 0, user = self.request.user,addedon = datetime.datetime.now())
+#         totalPrice = 0
+#         if cartList.exists():
+#             for cart in cartList:
+#                 totalPrice = totalPrice+int(cart.product.mrp1)
+#                 OrderDetail.objects.create(order = order,  product_id = cart.product_id, quantity = cart.quantity, user = self.request.user,addedon = datetime.datetime.now())
+#                 cart.delete()
+#         order.total = totalPrice  
+#         order.save()      
+#         return Response('created')
 
 class OrderDetails(generics.RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
@@ -147,8 +150,8 @@ class OrderList(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer 
     def get_queryset(self):
-        return self.queryset.filter(user_id= self.request.user.id)
-        
+        query_set = self.queryset.filter(user_id= self.request.user.id)
+        return query_set
     def post(self, request, *args, **kwargs): 
         cartList = Cart.objects.filter(user_id=self.request.user.id)
         sampleStr = "ABCDEFGHIGKLMNOPQRSTUVWXYZ123456789"
@@ -157,14 +160,36 @@ class OrderList(generics.ListCreateAPIView):
         random.shuffle(char_list)
         # convert list to string
         finalStr = ''.join(char_list)
-        order, created = Order.objects.get_or_create(orderId = finalStr,  total = 0, user = self.request.user,addedon = datetime.datetime.now())
+        now = datetime.datetime.now()
+        file_name = 'EC_'+str(now.year)+'_'+finalStr+'.csv'
+        finalStr = 'EC/'+str(now.year)+'/'+finalStr
+        user = User.objects.get(id=self.request.user.id)
+        order, created = Order.objects.get_or_create(orderId = finalStr,  total = 0, user = user,addedon = datetime.datetime.now())
         totalPrice = 0
         if cartList.exists():
             for cart in cartList:
                 totalPrice = totalPrice+int(cart.product.mrp1)
-                OrderDetail.objects.create(order = order,  product_id = cart.product_id, quantity = cart.quantity, user = self.request.user,addedon = datetime.datetime.now())
+                OrderDetail.objects.create(order = order,  product_id = cart.product_id, quantity = cart.quantity, user = user,addedon = datetime.datetime.now())
                 cart.delete()
         order.total = totalPrice  
-        order.save()      
+        order.save()
+        data = OrderSerializer(order)
+        csv_arr = []
+        for orderlist in data.data['order_details']:
+            for order in orderlist['orders']:
+                arr = {}
+                arr['Ecatalogue_orderno'] = data.data['orderId']
+                arr['Ecatalogue_orderDate'] = data.data['addedon']
+                arr['Customer_Code'] = data.data['user']['id']
+                arr['Shipping_point'] = ""
+                arr['line_no'] = 1
+                arr['Item_Code'] = order['product']['item_code']
+                arr['Item_Variant'] = order['product']['variant']
+                arr['Quantity'] = order['quantity']
+                arr['Remarks'] = ""
+                csv_arr.append(arr)
+        filename = config('CSV_PATH')+file_name
+        write_to_csv(csv_arr,filename) 
+        sendemail(data.data)      
         return Response('created')
 
