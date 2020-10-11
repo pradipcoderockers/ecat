@@ -154,33 +154,33 @@ class OrderList(generics.ListCreateAPIView):
         return query_set
     def post(self, request, *args, **kwargs): 
         cartList = Cart.objects.filter(user_id=self.request.user.id)
-        sampleStr = "ABCDEFGHIGKLMNOPQRSTUVWXYZ123456789"
-        char_list = list(sampleStr)
+        n = random.randint(0,123445)
         # shuffle list
-        random.shuffle(char_list)
         # convert list to string
-        finalStr = ''.join(char_list)
         now = datetime.datetime.now()
-        file_name = 'EC_'+str(now.year)+'_'+finalStr+'.csv'
-        finalStr = 'EC/'+str(now.year)+'/'+finalStr
+        finalStr = ''
         user = User.objects.get(id=self.request.user.id)
-        order, created = Order.objects.get_or_create(orderId = finalStr,  total = 0, user = user,addedon = datetime.datetime.now())
+        order, created = Order.objects.get_or_create(orderId = n,  total = 0, user = user,addedon = datetime.datetime.now())
         totalPrice = 0
         if cartList.exists():
             for cart in cartList:
+                finalStr = 'EC/'+str(now.year)+'/OR'+str(cart.product.category.id)+str(n)
                 totalPrice = totalPrice+int(cart.product.mrp1)
-                OrderDetail.objects.create(order = order,  product_id = cart.product_id, quantity = cart.quantity, user = user,addedon = datetime.datetime.now())
+                OrderDetail.objects.create(order_number=finalStr, order = order,  product_id = cart.product_id, quantity = cart.quantity, user = user,addedon = datetime.datetime.now())
                 cart.delete()
         order.total = totalPrice  
         order.save()
-        data = OrderSerializer(order)
-        csv_arr = []
-        for orderlist in data.data['order_details']:
-            for order in orderlist['orders']:
+        oreder_data = OrderSerializer(order)
+        queryset = OrderDetail.objects.filter(order_id=order.id).distinct().values('order_number')
+        for csvorder in queryset:
+            orderMain =  OrderDetail.objects.filter(order_number=csvorder['order_number'])
+            data = OrderDetailSerializer(orderMain,many=True)
+            csv_arr = []
+            for order in data.data:
                 arr = {}
-                arr['Ecatalogue_orderno'] = data.data['orderId']
-                arr['Ecatalogue_orderDate'] = data.data['addedon']
-                arr['Customer_Code'] = data.data['user']['id']
+                arr['Ecatalogue_orderno'] = csvorder['order_number']
+                arr['Ecatalogue_orderDate'] = order['addedon']
+                arr['Customer_Code'] = order['user']
                 arr['Shipping_point'] = ""
                 arr['line_no'] = 1
                 arr['Item_Code'] = order['product']['item_code']
@@ -188,8 +188,10 @@ class OrderList(generics.ListCreateAPIView):
                 arr['Quantity'] = order['quantity']
                 arr['Remarks'] = ""
                 csv_arr.append(arr)
-        filename = config('CSV_PATH')+file_name
+            csvfilename = str(csvorder['order_number'])    
+            csvfilename = csvfilename.replace('/','-')+'.csv' 
+            filename = config('CSV_PATH')+csvfilename
         write_to_csv(csv_arr,filename) 
-        sendemail(data.data)      
+        sendemail(oreder_data.data)      
         return Response('created')
 

@@ -17,71 +17,74 @@
 
 		</div>
 		<div class="col-xs-12" style="border-top: .1px solid grey;padding-top: 10px">
-			<table class="table" border="1">
 
-				<thead style="background:#0B9FDB" class="table-primary">
-					<tr class="table-primary">
-						<th colspan="2">SALSE ORDER NUMBER</th>
-						<th colspan="2">SALSE ORDER DATE</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="2">{{Order.orderId}}</td>
-						<td colspan="2">{{Order.addedon}}</td>
+			<div *ngFor="let  orderOne of Order.order_details">
+				<table class="table" border="1">
 
-					</tr>
-				</tbody>
-				<thead style="background:#0B9FDB" class="table-primary">
-					<tr class="table-primary">
-						<th>CUSTOMER NAME </th>
-						<th>CUSTOMER TYPE </th>
-						<th>MOBILE</th>
-						<th>ADDRESS</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>{{Order.user.first_name }} {{Order.user.last_name }}</td>
-						<td>{{Order.user.first_name }}</td>
-						<td>{{Order.user.profile && Order.user.profile.contact_number }}</td>
-						<td>{{Order.user.profile && Order.user.profile.address1 }}</td>
-					</tr>
-				</tbody>
-			</table>
-			<table class="table" border="1" *ngFor="let  orderOne of Order.order_details">
-				<thead class="table-primary" style="background:#0B9FDB;line-height: 50px">
-					<th style="text-align: center" colspan="10" class="table-primary">
-						{{ orderOne.name }}
-					</th>
-				</thead>
-				<thead style="background:#ccc" class="table-primary">
-					<tr class="table-primary">
-						<th>ID</th>
-						<th>CODE</th>
-						<th>VARIENT</th>
-						<th>SEGMENT</th>
-						<th>SUB SEGMENT</th>
-						<th>DESC</th>
-						<th>PRICE</th>
-						<th>QUANTITY</th>
-						<th>ORDER VALUE</th>
-					</tr>
-				</thead>
-				<tbody *ngFor="let order of orderOne.orders">
-					<tr>
-						<td>{{order && order.product.id}}</td>
-						<td>{{order && order.product.item_code}}</td>
-						<td>{{order && order.product.variant}}</td>
-						<td>{{order && order.product.segment.name}}</td>
-						<td>{{order && order.product.subsegment.name}}</td>
-						<td>{{order && order.product.item_description}}</td>
-						<td>{{order && order.product.mrp1}}</td>
-						<td>{{order && order.quantity}}</td>
-						<td>{{order && order.product[userMrp] * order.quantity}}</td>
-					</tr>
-				</tbody>
-			</table>
+					<thead style="background:#0B9FDB" class="table-primary">
+						<tr class="table-primary">
+							<th colspan="2">SALSE ORDER NUMBER</th>
+							<th colspan="2">SALSE ORDER DATE</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="2">{{orderOne.orders && orderOne.orders[0] && orderOne.orders[0]['order_number']}}</td>
+							<td colspan="2">{{Order.addedon}}</td>
+
+						</tr>
+					</tbody>
+					<thead style="background:#0B9FDB" class="table-primary">
+						<tr class="table-primary">
+							<th>CUSTOMER NAME </th>
+							<th>CUSTOMER TYPE </th>
+							<th>MOBILE</th>
+							<th>ADDRESS</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{Order.user.first_name }} {{Order.user.last_name }}</td>
+							<td>{{Order.user.first_name }}</td>
+							<td>{{Order.user.profile && Order.user.profile.contact_number }}</td>
+							<td>{{Order.user.profile && Order.user.profile.address1 }}</td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table" border="1">
+					<thead class="table-primary" style="background:#0B9FDB;line-height: 50px">
+						<th style="text-align: center" colspan="10" class="table-primary">
+							{{ orderOne.name }}
+						</th>
+					</thead>
+					<thead style="background:#ccc" class="table-primary">
+						<tr class="table-primary">
+							<th>ID</th>
+							<th>CODE</th>
+							<th>VARIENT</th>
+							<th>SEGMENT</th>
+							<th>SUB SEGMENT</th>
+							<th>DESC</th>
+							<th>PRICE</th>
+							<th>QUANTITY</th>
+							<th>ORDER VALUE</th>
+						</tr>
+					</thead>
+					<tbody *ngFor="let order of orderOne.orders">
+						<tr>
+							<td>{{order && order.product.id}}</td>
+							<td>{{order && order.product.item_code}}</td>
+							<td>{{order && order.product.variant}}</td>
+							<td>{{order && order.product.segment.name}}</td>
+							<td>{{order && order.product.subsegment.name}}</td>
+							<td>{{order && order.product.item_description}}</td>
+							<td>{{order && order.product.mrp1}}</td>
+							<td>{{order && order.quantity}}</td>
+							<td>{{order && order.product[userMrp] * order.quantity}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			<table class="table" border="1">
 				<thead style="background:#0B9FDB" class="table-primary">
 					<tr class="table-primary">
@@ -91,12 +94,16 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan="2"><strong>GRAND Total</strong></td>
-						<td colspan="2"><strong>{{Order.total}}</strong></td>
+						<td colspan="2">
+							<strong>GRAND Total</strong>
+						</td>
+						<td colspan="2">
+							<strong>{{Order.total}}</strong>
+						</td>
 					</tr>
 				</tbody>
-
 			</table>
+
 		</div>
 	</div>
 </div>

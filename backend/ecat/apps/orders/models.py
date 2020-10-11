@@ -12,6 +12,7 @@ class Order(models.Model):
 class OrderDetail(models.Model):
     user = models.ForeignKey(User, null=True,  on_delete = models.CASCADE)
     order  = models.ForeignKey(Order, null=True,  on_delete = models.CASCADE)
+    order_number  = models.CharField(default=True,null=True,max_length=200)
     quantity  = models.IntegerField(null=True,max_length=200)
     product = models.ForeignKey(Product, null=True,  on_delete = models.CASCADE)
     addedon = models.CharField(default=True,null=True,max_length=200)    
