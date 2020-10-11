@@ -190,7 +190,7 @@ class OrderList(generics.ListCreateAPIView):
                 csv_arr.append(arr)
             csvfilename = str(csvorder['order_number'])    
             csvfilename = csvfilename.replace('/','-')+'.csv' 
-            filename = config('CSV_PATH')+csvfilename
+            filename = '/var/www/ecat/backend/staticfiles/order_csv/'+csvfilename
         write_to_csv(csv_arr,filename) 
         sendemail(oreder_data.data)      
         return Response('created')
