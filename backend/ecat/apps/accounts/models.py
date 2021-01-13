@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from common.models import State
+from allauth.account.admin import EmailAddress
+
 # Create your models here.
 class UserManager(BaseUserManager):
 
@@ -88,11 +90,12 @@ class UserProfile(models.Model):
     def __str__(self):
         return "[{}] {}".format(self.user.email, self.user.get_fullname())
 
-    @receiver(post_save, sender=User)
-    def create_or_update_user_profile(sender, instance, created, **kwargs):
-        """
-        Signal handler to create user profiles automatically
-        """
-        if created:
-            UserProfile.objects.create(user=instance)
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    """
+    Signal handler to create user profiles automatically
+    """
+    if created:
+        UserProfile.objects.create(user=instance)
         instance.profile.save()
+        EmailAddress.objects.create(user_id = instance.id, email=instance.email,verified=True)

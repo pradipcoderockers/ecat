@@ -15,27 +15,40 @@
 
 # admin.site.register(User, CustomUserAdmin)
 # admin.site.register(Role)
+from import_export import fields, resources
+from import_export.admin import ImportExportModelAdmin
+from import_export.widgets import ForeignKeyWidget
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import  User, UserProfile
 
-class ProfileInline(admin.StackedInline):
-    model = UserProfile
-    can_delete = False
-    verbose_name_plural = 'UserProfile'
-    fk_name = 'user'
+# class ProfileInline(admin.StackedInline):
+#     model = UserProfile
+#     can_delete = False
+#     verbose_name_plural = 'UserProfile'
+#     fk_name = 'user'
 
-class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, )
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
-    readonly_fields = (
-        'last_login', 'date_joined',
-    )
+# class CustomUserAdmin(UserAdmin):
+#     inlines = (ProfileInline, )
+#     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
+#     readonly_fields = (
+#         'last_login', 'date_joined',
+#     )
     
-    def get_inline_instances(self, request, obj=None):
-        if not obj:
-            return list()
-        return super(CustomUserAdmin, self).get_inline_instances(request, obj)
+#     def get_inline_instances(self, request, obj=None):
+#         if not obj:
+#             return list()
+#         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
-admin.site.register(User, CustomUserAdmin)
-admin.site.register(UserProfile)
+# admin.site.register(User, CustomUserAdmin)
+# admin.site.register(UserProfile)
+class UserModelResource(resources.ModelResource):
+    class Meta:
+        model = User
+class CustomUserAdminProfile(ImportExportModelAdmin):
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
+    # list_filter = ('item_code','status')
+    # ordering = ('item_code','status')
+    resource_class = UserModelResource 
+
+admin.site.register(User,CustomUserAdminProfile)
