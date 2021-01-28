@@ -96,6 +96,15 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     Signal handler to create user profiles automatically
     """
     if created:
-        UserProfile.objects.create(user=instance)
+        userprofile = UserProfile.objects.create(user=instance)
+        if instance.state:
+            print("instance.state",instance.state)
+            try:
+                state = State.objects.get(code= instance.state)
+                print("state.state",state)
+                userprofile.state = state
+            except:
+                pass
+        userprofile.save() 
         instance.profile.save()
         EmailAddress.objects.create(user_id = instance.id, email=instance.email,verified=True)

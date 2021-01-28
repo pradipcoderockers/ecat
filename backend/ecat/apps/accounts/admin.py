@@ -41,8 +41,9 @@ from .models import  User, UserProfile
 #         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
 # admin.site.register(User, CustomUserAdmin)
-# admin.site.register(UserProfile)
+admin.site.register(UserProfile)
 class UserModelResource(resources.ModelResource):
+    state = fields.Field(column_name='state',attribute='state')
     class Meta:
         model = User
 class CustomUserAdminProfile(ImportExportModelAdmin):
