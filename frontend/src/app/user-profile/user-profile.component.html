@@ -30,6 +30,16 @@
                             <input type="text" name="username" required class="mat-input" id="username" ngModel>
                         </div>
                     </div>
+                   
+                    <div class="inner-main">
+                        <div class="left-inner-detail">
+                            <label>Email</label>
+                        </div>
+                        <div class="right-inner-detail">
+                            <input type="email" required name="emailId" class="mat-input" id="emailId" ngModel>
+                        </div>
+                    </div>
+
                     <div class="inner-main">
                         <div class="left-inner-detail">
                             <label>Password</label>
@@ -43,15 +53,21 @@
                             <label>Repeat Password</label>
                         </div>
                         <div class="right-inner-detail">
-                            <input type="text" ngModel required  name="password2" class="mat-input" id="password2">
+                            <input type="password" ngModel required  name="password2" class="mat-input" id="password2">
                         </div>
                     </div>
+
                     <div class="inner-main">
                         <div class="left-inner-detail">
-                            <label>Email</label>
+                            <label>State</label>
                         </div>
                         <div class="right-inner-detail">
-                            <input type="email" required name="emailId" class="mat-input" id="emailId" ngModel>
+                            <select style="width: 100%;height: 25px;border: 1px solid grey; outline: none; font-size: 1rem;border-radius:10px" class="mat-input"
+                                name="slist" [(ngModel)]="state">
+                                <option *ngFor="let state of stateList" value={{state.code}}>
+                                    {{state.name}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>

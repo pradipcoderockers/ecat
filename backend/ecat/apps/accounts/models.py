@@ -97,8 +97,7 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     """
     if created:
         userprofile = UserProfile.objects.create(user=instance)
-        if instance.state:
-            print("instance.state",instance.state)
+        if instance is not None:
             try:
                 state = State.objects.get(code= instance.state)
                 print("state.state",state)

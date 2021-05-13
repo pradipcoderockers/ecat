@@ -9,18 +9,22 @@ import { User } from '../model/user.model';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
+  stateList:any = []
   constructor(private service: CatagoryService, private router: Router,) { }
   ngOnInit() {
+    this.service.stateList().subscribe((data:any) => {
+      this.stateList = data;
+    });
   }
 
   register(form: NgForm) {
-    
     const firstName = form.value.firstName;
     const lastName = form.value.lastName;
     const emailId = form.value.emailId;
     const password1 = form.value.password1;
     const password2 = form.value.password2;
     const username = form.value.username;
+    let state = form.value.slist
     if(!firstName && !lastName && !emailId && !password1 && !password2 && !username){
       alert("Please fill all mandatory fields!")
       return false
@@ -36,6 +40,7 @@ export class UserProfileComponent implements OnInit {
     userLoad.password1 = password1;
     userLoad.password2 = password2;
     userLoad.username = username;
+    userLoad.state = state;
     this.service.createUser(userLoad).subscribe(
       (result:any) => {
         // Handle result
@@ -43,7 +48,7 @@ export class UserProfileComponent implements OnInit {
         this.router.navigate(['/']);
       },
       error => {
-        alert("Please verify your email or password");
+        alert("Please fill all mandatory fields and try again!");
         this.router.navigate(['/']);
       },
       () => {

@@ -1608,6 +1608,9 @@ var HeaderComponent = /** @class */ (function () {
     HeaderComponent.prototype.backClicked = function () {
         window.history.go(-1);
     };
+    HeaderComponent.prototype.filterCategory = function (data) {
+        window.location.href = '/products?item_code=' + data.code;
+    };
     HeaderComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-header',
@@ -1803,9 +1806,6 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent.prototype.onSubmit = function () {
         var _this = this;
-        if (this.loginForm.invalid) {
-            return;
-        }
         if (this.loginForm.controls.username.value && this.loginForm.controls.password.value) {
             var loginPayload = {
                 email: this.loginForm.controls.username.value,
@@ -1821,10 +1821,15 @@ var LoginComponent = /** @class */ (function () {
                     _this.invalidLogin = true;
                     alert(data.message);
                 }
+            }, function (error) {
+                alert("Please enter valid username and password!");
+            }, function () {
+                _this.router.navigate(['/login']);
             });
         }
         else {
             alert("Please enter valid username and password!");
+            return false;
         }
     };
     LoginComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -2968,7 +2973,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"right-data\">\r\n    <div class=\"detail-user-profile\">\r\n        <div class=\"left-user-data\">\r\n        </div>\r\n        <div class=\"right-user-data\">\r\n            <h4>CREATE PROFILE</h4>\r\n            <form #myform=\"ngForm\" (ngSubmit)=\"register(myform)\" id=\"\" class=\"form form-register\">\r\n                <div class=\"right-inner-left-data\">\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>First Name</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"text\" ngModel name=\"firstName\" required id=\"firstName\">\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>Last Name</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"text\" name=\"lastName\" required class=\"mat-input\" id=\"lastName\" ngModel>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>User Name</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"text\" name=\"username\" required class=\"mat-input\" id=\"username\" ngModel>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>Password</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"password\" ngModel required name=\"password1\" class=\"mat-input\" id=\"password1\">\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>Repeat Password</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"text\" ngModel required  name=\"password2\" class=\"mat-input\" id=\"password2\">\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>Email</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"email\" required name=\"emailId\" class=\"mat-input\" id=\"emailId\" ngModel>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <button type=\"submit\" class=\"editProfileBtn\">Save</button>\r\n            </form>\r\n        </div>\r\n\r\n\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"right-data\">\r\n    <div class=\"detail-user-profile\">\r\n        <div class=\"left-user-data\">\r\n        </div>\r\n        <div class=\"right-user-data\">\r\n            <h4>CREATE PROFILE</h4>\r\n            <form #myform=\"ngForm\" (ngSubmit)=\"register(myform)\" id=\"\" class=\"form form-register\">\r\n                <div class=\"right-inner-left-data\">\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>First Name</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"text\" ngModel name=\"firstName\" required id=\"firstName\">\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>Last Name</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"text\" name=\"lastName\" required class=\"mat-input\" id=\"lastName\" ngModel>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>User Name</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"text\" name=\"username\" required class=\"mat-input\" id=\"username\" ngModel>\r\n                        </div>\r\n                    </div>\r\n                   \r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>Email</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"email\" required name=\"emailId\" class=\"mat-input\" id=\"emailId\" ngModel>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>Password</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"password\" ngModel required name=\"password1\" class=\"mat-input\" id=\"password1\">\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>Repeat Password</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <input type=\"password\" ngModel required  name=\"password2\" class=\"mat-input\" id=\"password2\">\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"inner-main\">\r\n                        <div class=\"left-inner-detail\">\r\n                            <label>State</label>\r\n                        </div>\r\n                        <div class=\"right-inner-detail\">\r\n                            <select style=\"width: 100%;height: 25px;border: 1px solid grey; outline: none; font-size: 1rem;border-radius:10px\" class=\"mat-input\"\r\n                                name=\"slist\" [(ngModel)]=\"state\">\r\n                                <option *ngFor=\"let state of stateList\" value={{state.code}}>\r\n                                    {{state.name}}\r\n                                </option>\r\n                            </select>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <button type=\"submit\" class=\"editProfileBtn\">Save</button>\r\n            </form>\r\n        </div>\r\n\r\n\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -2996,8 +3001,13 @@ var UserProfileComponent = /** @class */ (function () {
     function UserProfileComponent(service, router) {
         this.service = service;
         this.router = router;
+        this.stateList = [];
     }
     UserProfileComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.service.stateList().subscribe(function (data) {
+            _this.stateList = data;
+        });
     };
     UserProfileComponent.prototype.register = function (form) {
         var _this = this;
@@ -3007,6 +3017,7 @@ var UserProfileComponent = /** @class */ (function () {
         var password1 = form.value.password1;
         var password2 = form.value.password2;
         var username = form.value.username;
+        var state = form.value.slist;
         if (!firstName && !lastName && !emailId && !password1 && !password2 && !username) {
             alert("Please fill all mandatory fields!");
             return false;
@@ -3022,12 +3033,13 @@ var UserProfileComponent = /** @class */ (function () {
         userLoad.password1 = password1;
         userLoad.password2 = password2;
         userLoad.username = username;
+        userLoad.state = state;
         this.service.createUser(userLoad).subscribe(function (result) {
             // Handle result
             alert(result.detail);
             _this.router.navigate(['/']);
         }, function (error) {
-            alert("Please verify your email or password");
+            alert("Please fill all mandatory fields and try again!");
             _this.router.navigate(['/']);
         }, function () {
             _this.router.navigate(['/']);
@@ -3143,7 +3155,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 var environment = {
     production: false,
-    baseUrl: 'https://ecat.jaispring.com',
+    baseUrl: 'http://localhost:8002',
     baseUrln: 'http://34.68.23.11:4200/pradipAPI/api.php?path='
 };
 /*

@@ -1,17 +1,17 @@
-FROM python:3.6.7-alpine3.8
+FROM python:3.6.12-alpine3.12
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apk update \
-    && apk add --virtual build-deps gcc python3-dev musl-dev \
-    && apk add --no-cache postgresql-client postgresql-contrib postgresql-dev bash g++ linux-headers
-
+    && apk add --virtual build-deps gcc python3-dev libressl-dev musl-dev libffi-dev libressl \
+    && apk add --no-cache coreutils postgresql-client postgresql-contrib postgresql-dev jpeg-dev zlib-dev libjpeg bash g++ linux-headers \
+    && apk add build-base libzmq zeromq-dev libxslt-dev
 ADD ./requirements.txt /tmp/
 
 # Install PyPi dependencies
 WORKDIR /tmp
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install pyzmq && pip install cython && pip install -r requirements.txt
 
 RUN apk del build-deps
 

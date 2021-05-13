@@ -24,9 +24,6 @@ export class LoginComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (this.loginForm.invalid) {
-      return;
-    }
     if(this.loginForm.controls.username.value && this.loginForm.controls.password.value){
       const loginPayload = {
         email: this.loginForm.controls.username.value,
@@ -41,9 +38,17 @@ export class LoginComponent implements OnInit {
           this.invalidLogin = true;
           alert(data.message);
         }
-      });
+      },
+      error => {
+        alert("Please enter valid username and password!");
+      },
+      () => {
+         this.router.navigate(['/login']);
+      }
+    )
     }else{
       alert("Please enter valid username and password!");
+      return false;
     }
     
   }

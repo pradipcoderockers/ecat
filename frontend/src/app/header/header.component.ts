@@ -403,6 +403,8 @@ export class HeaderComponent implements OnInit {
 		window.history.go(-1)
 	}
 
-
+	filterCategory(data){
+		window.location.href = '/products?item_code=' + data.code
+	}
 
 }
