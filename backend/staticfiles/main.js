@@ -3155,7 +3155,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 var environment = {
     production: false,
-    baseUrl: 'http://localhost:8002',
+    baseUrl: 'https://ecat.jaispring.com',
     baseUrln: 'http://34.68.23.11:4200/pradipAPI/api.php?path='
 };
 /*
