@@ -150,7 +150,7 @@ class FavouriteDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class OrderDetails(generics.RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
-    queryset = OrderDetail.objects.all()
+    queryset = OrderDetail.objects.all().order_by('-addedon')
     serializer_class = OrderDetailSerializer        
 
 

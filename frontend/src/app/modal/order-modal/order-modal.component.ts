@@ -20,6 +20,7 @@ export class OrderModalComponent implements OnInit {
   	   
     let stateDetail = (window.localStorage.getItem('stateDetail')) ? JSON.parse(window.localStorage.getItem('stateDetail')) : [];
     this.userMrp = 'mrp1'
+    console.log("Order",Order)
     if((stateDetail.role==1 || stateDetail.role==2) && stateDetail.state.dbp){
         this.userMrp = stateDetail.state.dbp
     }
