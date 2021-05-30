@@ -2872,7 +2872,7 @@ var CatagoryService = /** @class */ (function () {
         return this.http.get(this.baseUrl + "/api/cart");
     };
     CatagoryService.prototype.deleteCart = function (id) {
-        return this.http.delete(this.baseUrl + "/api/cart/" + id);
+        return this.http.get(this.baseUrl + "/api/cart/" + id);
     };
     CatagoryService.prototype.postCart = function (data) {
         return this.http.post(this.baseUrl + "/api/cart", data);
@@ -2881,7 +2881,7 @@ var CatagoryService = /** @class */ (function () {
         return this.http.get(this.baseUrl + "/api/favourite");
     };
     CatagoryService.prototype.deleteFavourite = function (id) {
-        return this.http.delete(this.baseUrl + "/api/favourite/" + id);
+        return this.http.get(this.baseUrl + "/api/favourite/" + id);
     };
     CatagoryService.prototype.postFavourite = function (data) {
         return this.http.post(this.baseUrl + "/api/favourite", data);
@@ -3036,7 +3036,7 @@ var UserProfileComponent = /** @class */ (function () {
         userLoad.state = state;
         this.service.createUser(userLoad).subscribe(function (result) {
             // Handle result
-            alert(result.detail);
+            alert('Your account has been created successfully!');
             _this.router.navigate(['/']);
         }, function (error) {
             alert("Please fill all mandatory fields and try again!");
@@ -3155,7 +3155,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 var environment = {
     production: false,
-    baseUrl: 'https://ecat.jaispring.com',
+    baseUrl: 'http://localhost:8002',
     baseUrln: 'http://34.68.23.11:4200/pradipAPI/api.php?path='
 };
 /*

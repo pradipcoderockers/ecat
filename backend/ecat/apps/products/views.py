@@ -95,6 +95,10 @@ class CartDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
 
+    def get(self, request, *args, **kwargs):
+        Cart.objects.filter(user_id=self.request.user.id).delete()
+        return Response('deleted successfully')
+
 class FavouriteList(generics.ListCreateAPIView):
     serializer_class = FavouriteSerializer
     queryset = Favourite.objects.all().order_by('id')
@@ -111,7 +115,12 @@ class FavouriteList(generics.ListCreateAPIView):
 class FavouriteDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Favourite.objects.all()
-    serializer_class = FavouriteSerializer        
+    serializer_class = FavouriteSerializer
+
+    def get(self, request, *args, **kwargs):
+        Favourite.objects.filter(user_id=self.request.user.id).delete()
+        return Response('deleted successfully')
+
 
 # class OrderList(generics.ListCreateAPIView):
 #     permission_classes = (IsAuthenticated,)

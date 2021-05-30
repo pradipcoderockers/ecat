@@ -142,7 +142,7 @@ export class CatagoryService {
     return this.http.get<ApiResponse>(this.baseUrl+"/api/cart");
   }
   deleteCart(id): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(this.baseUrl+"/api/cart/"+id);
+    return this.http.get<ApiResponse>(this.baseUrl+"/api/cart/"+id);
   }
   postCart(data: any): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl+"/api/cart",data);
@@ -151,7 +151,7 @@ export class CatagoryService {
     return this.http.get<ApiResponse>(this.baseUrl+"/api/favourite");
   }
   deleteFavourite(id): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(this.baseUrl+"/api/favourite/"+id);
+    return this.http.get<ApiResponse>(this.baseUrl+"/api/favourite/"+id);
   }
   postFavourite(data: any): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl+"/api/favourite",data);

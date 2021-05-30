@@ -44,7 +44,7 @@ export class UserProfileComponent implements OnInit {
     this.service.createUser(userLoad).subscribe(
       (result:any) => {
         // Handle result
-        alert(result.detail);
+        alert('Your account has been created successfully!');
         this.router.navigate(['/']);
       },
       error => {
