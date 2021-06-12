@@ -169,12 +169,21 @@ class OrderList(generics.ListCreateAPIView):
         now = datetime.datetime.now()
         finalStr = ''
         user = User.objects.get(id=self.request.user.id)
+        mrp = 'mrp1'
+        try:
+            mrp = user.profile.state.dbp
+        except Exception as e:
+            pass
         order, created = Order.objects.get_or_create(orderId = n,  total = 0, user = user,addedon = datetime.datetime.now())
         totalPrice = 0
         if cartList.exists():
             for cart in cartList:
                 finalStr = 'EC/'+str(now.year)+'/OR'+str(cart.product.category.id)+str(n)
-                totalPrice = totalPrice+int(cart.product.mrp1)
+                cart_product = cart.product.mrp1
+                if mrp=='dbp1':
+                    cart_product = cart.product.dbp1
+                cart_quantity = cart.quantity
+                totalPrice = totalPrice+int(cart_product)*int(cart_quantity)
                 OrderDetail.objects.create(order_number=finalStr, order = order,  product_id = cart.product_id, quantity = cart.quantity, user = user,addedon = datetime.datetime.now())
                 cart.delete()
         order.total = totalPrice  
@@ -200,7 +209,10 @@ class OrderList(generics.ListCreateAPIView):
             csvfilename = str(csvorder['order_number'])    
             csvfilename = csvfilename.replace('/','-')+'.csv' 
             filename = '/var/www/ecat/backend/staticfiles/order_csv/'+csvfilename
-        write_to_csv(csv_arr,filename) 
-        sendemail(oreder_data.data)      
+        try:
+            write_to_csv(csv_arr,filename) 
+            sendemail(oreder_data.data)
+        except Exception as e:
+            pass      
         return Response('created')
 
