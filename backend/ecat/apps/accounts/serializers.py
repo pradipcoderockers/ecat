@@ -14,6 +14,7 @@ import secrets
 import string
 from django.db.models import F
 from common.serializers import StateSerializer
+from common.models import State
 
 class UserProfileSerializer(serializers.ModelSerializer):
     state = StateSerializer(read_only=True)
@@ -46,18 +47,20 @@ class CustomRegisterSerializer(RegisterSerializer):
             adapter.save_user(request, user, self)
             user.is_active = True
             user.save()
+            user_profile = UserProfile.objects.get(user=user)
+            state = State.objects.get(code= request.data['state'])
+            user_profile.state = state
+            user_profile.save()
             try:
                 setup_user_email(request, user, [])
             except Exception as e:
                 pass
             return user
         except Exception as e:
-            print("dfsfdafasdfdfasf")
             raise exceptions.APIException(e)
         
     def get_cleaned_data(self):
         super(CustomRegisterSerializer, self).get_cleaned_data()
-        print("self.validated_data",self.validated_data)
         return {
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', ''),
