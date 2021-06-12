@@ -13,16 +13,18 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         user = self.model(
             email=self.normalize_email(email),
+            username=self.normalize_email(email)
         )
+        
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password):
         user = self.create_user(
-            email,
-            password=password
+            email
         )
+        user.set_password(password)
         user.is_staff  = True
         user.is_active  = True
         user.is_superuser = True
@@ -100,10 +102,10 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         if instance is not None:
             try:
                 state = State.objects.get(code= instance.state)
-                print("state.state",state)
                 userprofile.state = state
             except:
                 pass
         userprofile.save() 
         instance.profile.save()
+        
         EmailAddress.objects.create(user_id = instance.id, email=instance.email,verified=True)

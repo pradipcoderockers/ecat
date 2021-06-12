@@ -178,6 +178,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+
 # Notebook
 NOTEBOOK_ARGUMENTS = [
     '--ip', '0.0.0.0', 
