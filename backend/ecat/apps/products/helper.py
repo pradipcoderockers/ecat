@@ -77,7 +77,7 @@ def sendemail(Order):
             header +=                     '<td width="20%">'+str(order["product"]["item_description"])+'</td>'
             header +=                     '<td width="10%">'+str(order["product"]["mrp1"])+'</td>'
             header +=                     '<td width="10%">'+str(order["quantity"])+'</td>'
-            header +=                     '<td width="10%">'+str(order["product"]["mrp1"]*order["quantity"])+'</td>'
+            header +=                     '<td width="10%">'+int(order["product"]["mrp1"])*int(order["quantity"])+'</td>'
             header +=                 '</tr>'
             header +=             '</tbody>'
         header +=           ' </table>'
