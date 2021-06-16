@@ -15,6 +15,11 @@ class ProductSerializer(serializers.ModelSerializer):
     vechicle = VechicleSerializer(read_only=True)
     leafposition = LeafPositionSerializer(read_only=True)
     vechiclemodel = VechicleModelSerializer(read_only=True)
+    length = serializers.SerializerMethodField()
+
+    def get_length(self, obj):
+        format_float = "{:.2f}".format(float(obj.length))
+        return format_float
     class Meta:
         model = Product
         fields = '__all__'
