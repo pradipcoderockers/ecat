@@ -86,7 +86,7 @@
                         </div>
                         <div class="right-inner-detail">
                             <select style="width: 100%;height: 25px;border: 1px solid grey; outline: none; font-size: 1rem;border-radius:10px" class="mat-input"
-                                name=slist [(ngModel)]="user.profile.state">
+                                name=slist [(ngModel)]="user.profile.state.id">
                                 <option *ngFor="let state of stateList" value={{state.id}}>
                                     {{state.name}}
                                 </option>

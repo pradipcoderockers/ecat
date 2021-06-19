@@ -25,18 +25,18 @@ class OrderSerializer(serializers.ModelSerializer):
     def get_addedon(self, obj):
         date_time_str = obj.addedon,
         
-        # # local = pytz.timezone("Asia/Kolkata")
-        # naive = datetime.strptime(obj.addedon, "%Y-%m-%d %H:%M:%S.%f")
-        # myFormat = "%Y-%m-%d %H:%M %p"
-        # # print("naive",naive.strftime(myFormat))
-        # # print("naive",naive)
-        # # local_dt = local.localize(int(naive), is_dst=None)
-        # # utc_dt = local_dt.astimezone(pytz.utc)
-        # # date_time_obj = datetime.strptime(obj.addedon, '%Y-%m-%d %H:%M:%S.%f')
+        # local = pytz.timezone("Asia/Kolkata")
+        naive = datetime.strptime(obj.addedon, "%Y-%m-%d %H:%M:%S.%f")
+        myFormat = "%Y-%m-%d %H:%M %p"
+        # print("naive",naive.strftime(myFormat))
+        # print("naive",naive)
+        # local_dt = local.localize(int(naive), is_dst=None)
+        # utc_dt = local_dt.astimezone(pytz.utc)
+        # date_time_obj = datetime.strptime(obj.addedon, '%Y-%m-%d %H:%M:%S.%f')
         
-        # # print('dddddddddd',date_time_obj)
-        # # date_time = datetime.datetime.fromisoformat(obj.addedon)
-        return date_time_str
+        # print('dddddddddd',date_time_obj)
+        # date_time = datetime.datetime.fromisoformat(obj.addedon)
+        return naive.strftime(myFormat)
 
     
     class Meta:

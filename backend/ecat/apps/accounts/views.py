@@ -40,7 +40,7 @@ class AccountDetail(generics.RetrieveUpdateAPIView):
             user.save()
             userProfile = UserProfile.objects.get(user_id=user.id)
             profileObj = self.request.data.get('profile') 
-            state = State.objects.filter(id=profileObj['state'])
+            state = State.objects.filter(id=profileObj['state']['id'])
             userProfile.address1 = profileObj['address1']
             userProfile.address2 = profileObj['address2']
             userProfile.city = profileObj['city']

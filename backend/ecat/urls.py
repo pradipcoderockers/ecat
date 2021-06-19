@@ -28,7 +28,7 @@ admin.site.site_title = _("E-Catelog Admin")
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
-
+from allauth.account.views import PasswordResetView
 urlpatterns = [
     url('api/admin/', admin.site.urls),
     url('api/', include('categories.urls')),

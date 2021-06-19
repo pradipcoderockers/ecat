@@ -65,8 +65,9 @@ class ProductList(generics.ListCreateAPIView):
             query.add(Q(subcategory__code=subcategory), Q.AND)
         item_code = self.request.query_params.get('item_code')
         if item_code is not None:
-            query.add(Q(item_code=item_code), Q.AND)
-        queryset = Product.objects.filter(query).distinct('leafposition__id')
+            query.add(Q(item_code__contains=item_code), Q.AND)
+
+        queryset = Product.objects.filter(query)
         return queryset 
         # subcategory = self.request.query_params.get('subcategory')
         # if subcategory is not None:
