@@ -208,7 +208,7 @@ class OrderList(generics.ListCreateAPIView):
                 cart_quantity = cart.quantity
                 totalPrice = totalPrice+int(cart_product)*int(cart_quantity)
                 OrderDetail.objects.create(order_number=finalStr, order = order,  product_id = cart.product_id, quantity = cart.quantity, user = user,addedon = datetime.datetime.now())
-                # cart.delete()
+                cart.delete()
         order.total = totalPrice  
         order.save()
         oreder_data = OrderSerializer(order)
@@ -235,6 +235,7 @@ class OrderList(generics.ListCreateAPIView):
         try:
             write_to_csv(csv_arr,filename)
             csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
+            # print("csv_url",csv_url)
             sendemail(oreder_data.data,csv_url)
         except Exception as e:
             pass      

@@ -109,7 +109,7 @@ def sendemail(Order, csv_url):
     to  =  ['jaiconnect@jaispring.com']
     if Order["user"]['profile']['state']['depo_email'] is not True:
         to  =   Order["user"]['profile']['state']['depo_email'].split(',')
-    print("tooooo",to)
+    # print("tooooo",to)
     subject = 'E-CAT ORDER INVOICE'
     send_mail(
     subject,
