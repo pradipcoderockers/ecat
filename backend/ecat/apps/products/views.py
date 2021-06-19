@@ -20,6 +20,7 @@ import datetime
 from products.helper import *
 import os
 from decouple import config
+from django.conf import settings
 
 # Create your views here.
 class ProductList(generics.ListCreateAPIView):
@@ -180,6 +181,7 @@ class OrderList(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer 
     def get_queryset(self):
+        
         query_set = self.queryset.filter(user_id= self.request.user.id)
         return query_set
     def post(self, request, *args, **kwargs): 
@@ -206,7 +208,7 @@ class OrderList(generics.ListCreateAPIView):
                 cart_quantity = cart.quantity
                 totalPrice = totalPrice+int(cart_product)*int(cart_quantity)
                 OrderDetail.objects.create(order_number=finalStr, order = order,  product_id = cart.product_id, quantity = cart.quantity, user = user,addedon = datetime.datetime.now())
-                cart.delete()
+                # cart.delete()
         order.total = totalPrice  
         order.save()
         oreder_data = OrderSerializer(order)
@@ -229,10 +231,11 @@ class OrderList(generics.ListCreateAPIView):
                 csv_arr.append(arr)
             csvfilename = str(csvorder['order_number'])    
             csvfilename = csvfilename.replace('/','-')+'.csv' 
-            filename = '/var/www/ecat/backend/staticfiles/order_csv/'+csvfilename
+            filename = settings.MEDIA_ROOT+'/order_csv/'+csvfilename
         try:
-            write_to_csv(csv_arr,filename) 
-            sendemail(oreder_data.data)
+            write_to_csv(csv_arr,filename)
+            csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
+            sendemail(oreder_data.data,csv_url)
         except Exception as e:
             pass      
         return Response('created')

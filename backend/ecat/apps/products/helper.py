@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 import csv
 from common.models import State
-def sendemail(Order):
+def sendemail(Order, csv_url):
     header  =  '<html xmlns="http://www.w3.org/1999/xhtml">'
     header  +=  '<head>'
     header  +=  '<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">'
@@ -77,7 +77,7 @@ def sendemail(Order):
             header +=                     '<td width="20%">'+str(order["product"]["item_description"])+'</td>'
             header +=                     '<td width="10%">'+str(order["product"]["mrp1"])+'</td>'
             header +=                     '<td width="10%">'+str(order["quantity"])+'</td>'
-            header +=                     '<td width="10%">'+int(order["product"]["mrp1"])*int(order["quantity"])+'</td>'
+            header +=                     '<td width="10%">'+str(int(order["product"]["mrp1"])*int(order["quantity"]))+'</td>'
             header +=                 '</tr>'
             header +=             '</tbody>'
         header +=           ' </table>'
@@ -101,6 +101,7 @@ def sendemail(Order):
     header  +=             ' </tbody>'
     header  +=       '</table>'
     header  +=       '</div>'
+    header  +=       '<div style="margin-top:10px;"><a href='+csv_url+'>Click here to export orders to a CSV file</a></div>'
     header  += '</div>'
     header  += '</body>'
     header  += '</html>'
@@ -108,6 +109,7 @@ def sendemail(Order):
     to  =  ['jaiconnect@jaispring.com']
     if Order["user"]['profile']['state']['depo_email'] is not True:
         to  =   Order["user"]['profile']['state']['depo_email'].split(',')
+    print("tooooo",to)
     subject = 'E-CAT ORDER INVOICE'
     send_mail(
     subject,

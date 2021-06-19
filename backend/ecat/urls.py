@@ -26,6 +26,8 @@ from django.utils.translation import ugettext_lazy as _
 admin.site.site_header = _("E-Catelog Administration")
 admin.site.site_title = _("E-Catelog Admin")
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url('api/admin/', admin.site.urls),
@@ -42,6 +44,7 @@ urlpatterns = [
     url(r'^me/', CurrentUserView.as_view(), name='current_user_view'),
     url(r'^accounts/', include('accounts.urls')),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
 
