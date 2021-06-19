@@ -569,42 +569,42 @@ var CategoryComponent = /** @class */ (function () {
             }
             else if (leafposition && vechicle && leaftype && subsegment && segment && subcategory && category) {
                 _this.catType = 'vechiclemodel';
-                _this.service.getVechiclemodel(leafposition).subscribe(function (data) {
+                _this.service.getVechiclemodel(category, subcategory, segment, subsegment, leaftype, vechicle, leafposition).subscribe(function (data) {
                     _this.subcategories = data;
                     _this.subcategoriesloading = false;
                 });
             }
             else if (vechicle && leaftype && subsegment && segment && subcategory && category) {
                 _this.catType = 'leafposition';
-                _this.service.getLeafposition(vechicle).subscribe(function (data) {
+                _this.service.getLeafposition(category, subcategory, segment, subsegment, leaftype, vechicle).subscribe(function (data) {
                     _this.subcategories = data;
                     _this.subcategoriesloading = false;
                 });
             }
             else if (leaftype && subsegment && segment && subcategory && category) {
                 _this.catType = 'vechicle';
-                _this.service.getVechicle(leaftype).subscribe(function (data) {
+                _this.service.getVechicle(category, subcategory, segment, subsegment, leaftype).subscribe(function (data) {
                     _this.subcategories = data;
                     _this.subcategoriesloading = false;
                 });
             }
             else if (subsegment && segment && subcategory && category) {
                 _this.catType = 'leaftype';
-                _this.service.getLeaftype(subsegment).subscribe(function (data) {
+                _this.service.getLeaftype(category, subcategory, segment, subsegment).subscribe(function (data) {
                     _this.subcategories = data;
                     _this.subcategoriesloading = false;
                 });
             }
             else if (segment && subcategory && category) {
                 _this.catType = 'subsegment';
-                _this.service.getSubSegment(segment).subscribe(function (data) {
+                _this.service.getSubSegment(segment, category, subcategory).subscribe(function (data) {
                     _this.subcategories = data;
                     _this.subcategoriesloading = false;
                 });
             }
             else if (subcategory && category) {
                 _this.catType = 'segment';
-                _this.service.getSegment(subcategory).subscribe(function (data) {
+                _this.service.getSegment(subcategory, category).subscribe(function (data) {
                     _this.subcategories = data;
                     _this.subcategoriesloading = false;
                 });
@@ -1321,7 +1321,7 @@ var HeaderComponent = /** @class */ (function () {
                 _this.subCategories = data;
                 var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
                 _this.selectedSubCategory = _this.subCategories[subCatindex]['subcategory'];
-                _this.catagoryService.getSegment(_this.selectedSubCategory.code).subscribe(function (data) {
+                _this.catagoryService.getSegment(_this.selectedSubCategory.code, category).subscribe(function (data) {
                     _this.segments = data;
                 });
             });
@@ -1337,11 +1337,11 @@ var HeaderComponent = /** @class */ (function () {
                 _this.subCategories = data;
                 var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
                 _this.selectedSubCategory = _this.subCategories[subCatindex]['subcategory'];
-                _this.catagoryService.getSegment(_this.selectedSubCategory.code).subscribe(function (data) {
+                _this.catagoryService.getSegment(_this.selectedSubCategory.code, category).subscribe(function (data) {
                     _this.segments = data;
                     var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
                     _this.selectedSegment = _this.segments[segmentIndex]['segment'];
-                    _this.catagoryService.getSubSegment(segment).subscribe(function (data) {
+                    _this.catagoryService.getSubSegment(segment, category, subcategory).subscribe(function (data) {
                         _this.subSegments = data;
                     });
                 });
@@ -1358,15 +1358,15 @@ var HeaderComponent = /** @class */ (function () {
                 _this.subCategories = data;
                 var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
                 _this.selectedSubCategory = _this.subCategories[subCatindex]['subcategory'];
-                _this.catagoryService.getSegment(_this.selectedSubCategory.code).subscribe(function (data) {
+                _this.catagoryService.getSegment(_this.selectedSubCategory.code, category).subscribe(function (data) {
                     _this.segments = data;
                     var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
                     _this.selectedSegment = _this.segments[segmentIndex]['segment'];
-                    _this.catagoryService.getSubSegment(segment).subscribe(function (data) {
+                    _this.catagoryService.getSubSegment(segment, category, subcategory).subscribe(function (data) {
                         _this.subSegments = data;
                         var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
                         _this.selectedSubSegment = _this.subSegments[subSegmentIndex]['subsegment'];
-                        _this.catagoryService.getLeaftype(subsegment).subscribe(function (data) {
+                        _this.catagoryService.getLeaftype(category, subcategory, segment, subsegment).subscribe(function (data) {
                             _this.leafType = data;
                         });
                     });
@@ -1384,19 +1384,19 @@ var HeaderComponent = /** @class */ (function () {
                 _this.subCategories = data;
                 var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
                 _this.selectedSubCategory = _this.subCategories[subCatindex]['subcategory'];
-                _this.catagoryService.getSegment(_this.selectedSubCategory.code).subscribe(function (data) {
+                _this.catagoryService.getSegment(_this.selectedSubCategory.code, category).subscribe(function (data) {
                     _this.segments = data;
                     var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
                     _this.selectedSegment = _this.segments[segmentIndex]['segment'];
-                    _this.catagoryService.getSubSegment(segment).subscribe(function (data) {
+                    _this.catagoryService.getSubSegment(segment, category, subcategory).subscribe(function (data) {
                         _this.subSegments = data;
                         var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
                         _this.selectedSubSegment = _this.subSegments[subSegmentIndex]['subsegment'];
-                        _this.catagoryService.getLeaftype(subsegment).subscribe(function (data) {
+                        _this.catagoryService.getLeaftype(category, subcategory, segment, subsegment).subscribe(function (data) {
                             _this.leafType = data;
                             var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
                             _this.selectedLeafType = _this.leafType[leafTypeIndex]['leaftype'];
-                            _this.catagoryService.getVechicle(leaftype).subscribe(function (data) {
+                            _this.catagoryService.getVechicle(category, subcategory, segment, subsegment, leaftype).subscribe(function (data) {
                                 _this.vechicles = data;
                             });
                         });
@@ -1415,23 +1415,23 @@ var HeaderComponent = /** @class */ (function () {
                 _this.subCategories = data;
                 var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
                 _this.selectedSubCategory = _this.subCategories[subCatindex]['subcategory'];
-                _this.catagoryService.getSegment(_this.selectedSubCategory.code).subscribe(function (data) {
+                _this.catagoryService.getSegment(_this.selectedSubCategory.code, category).subscribe(function (data) {
                     _this.segments = data;
                     var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
                     _this.selectedSegment = _this.segments[segmentIndex]['segment'];
-                    _this.catagoryService.getSubSegment(segment).subscribe(function (data) {
+                    _this.catagoryService.getSubSegment(segment, category, subcategory).subscribe(function (data) {
                         _this.subSegments = data;
                         var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
                         _this.selectedSubSegment = _this.subSegments[subSegmentIndex]['subsegment'];
-                        _this.catagoryService.getLeaftype(subsegment).subscribe(function (data) {
+                        _this.catagoryService.getLeaftype(category, subcategory, segment, subsegment).subscribe(function (data) {
                             _this.leafType = data;
                             var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
                             _this.selectedLeafType = _this.leafType[leafTypeIndex]['leaftype'];
-                            _this.catagoryService.getVechicle(leaftype).subscribe(function (data) {
+                            _this.catagoryService.getVechicle(category, subcategory, segment, subsegment, leaftype).subscribe(function (data) {
                                 _this.vechicles = data;
                                 var vechicleIndex = data.map(function (e) { return e.vechicle.code; }).indexOf(vechicle);
                                 _this.selectedVechicle = _this.vechicles[vechicleIndex]['vechicle'];
-                                _this.catagoryService.getLeafposition(vechicle).subscribe(function (data) {
+                                _this.catagoryService.getLeafposition(category, subcategory, segment, subsegment, leaftype, vechicle).subscribe(function (data) {
                                     _this.leafPosition = data;
                                 });
                             });
@@ -1451,27 +1451,27 @@ var HeaderComponent = /** @class */ (function () {
                 _this.subCategories = data;
                 var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
                 _this.selectedSubCategory = _this.subCategories[subCatindex]['subcategory'];
-                _this.catagoryService.getSegment(_this.selectedSubCategory.code).subscribe(function (data) {
+                _this.catagoryService.getSegment(_this.selectedSubCategory.code, category).subscribe(function (data) {
                     _this.segments = data;
                     var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
                     _this.selectedSegment = _this.segments[segmentIndex]['segment'];
-                    _this.catagoryService.getSubSegment(segment).subscribe(function (data) {
+                    _this.catagoryService.getSubSegment(segment, category, subcategory).subscribe(function (data) {
                         _this.subSegments = data;
                         var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
                         _this.selectedSubSegment = _this.subSegments[subSegmentIndex]['subsegment'];
-                        _this.catagoryService.getLeaftype(subsegment).subscribe(function (data) {
+                        _this.catagoryService.getLeaftype(category, subcategory, segment, subsegment).subscribe(function (data) {
                             _this.leafType = data;
                             var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
                             _this.selectedLeafType = _this.leafType[leafTypeIndex]['leaftype'];
-                            _this.catagoryService.getVechicle(leaftype).subscribe(function (data) {
+                            _this.catagoryService.getVechicle(category, subcategory, segment, subsegment, leaftype).subscribe(function (data) {
                                 _this.vechicles = data;
                                 var vechicleIndex = data.map(function (e) { return e.vechicle.code; }).indexOf(vechicle);
                                 _this.selectedVechicle = _this.vechicles[vechicleIndex]['vechicle'];
-                                _this.catagoryService.getLeafposition(vechicle).subscribe(function (data) {
+                                _this.catagoryService.getLeafposition(category, subcategory, segment, subsegment, leaftype, vechicle).subscribe(function (data) {
                                     _this.leafPosition = data;
                                     var leafPostionIndex = data.map(function (e) { return e.leafposition.code; }).indexOf(leafposition);
                                     _this.selectedLeafPosition = _this.leafPosition[leafPostionIndex]['leafposition'];
-                                    _this.catagoryService.getVechiclemodel(leafposition).subscribe(function (data) {
+                                    _this.catagoryService.getVechiclemodel(category, subcategory, segment, subsegment, leaftype, vechicle, leafposition).subscribe(function (data) {
                                         _this.vechicleModel = data;
                                     });
                                 });
@@ -1492,27 +1492,27 @@ var HeaderComponent = /** @class */ (function () {
                 _this.subCategories = data;
                 var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
                 _this.selectedSubCategory = _this.subCategories[subCatindex]['subcategory'];
-                _this.catagoryService.getSegment(_this.selectedSubCategory.code).subscribe(function (data) {
+                _this.catagoryService.getSegment(_this.selectedSubCategory.code, category).subscribe(function (data) {
                     _this.segments = data;
                     var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
                     _this.selectedSegment = _this.segments[segmentIndex]['segment'];
-                    _this.catagoryService.getSubSegment(segment).subscribe(function (data) {
+                    _this.catagoryService.getSubSegment(segment, category, subcategory).subscribe(function (data) {
                         _this.subSegments = data;
                         var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
                         _this.selectedSubSegment = _this.subSegments[subSegmentIndex]['subsegment'];
-                        _this.catagoryService.getLeaftype(subsegment).subscribe(function (data) {
+                        _this.catagoryService.getLeaftype(category, subcategory, segment, subsegment).subscribe(function (data) {
                             _this.leafType = data;
                             var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
                             _this.selectedLeafType = _this.leafType[leafTypeIndex]['leaftype'];
-                            _this.catagoryService.getVechicle(leaftype).subscribe(function (data) {
+                            _this.catagoryService.getVechicle(category, subcategory, segment, subsegment, leaftype).subscribe(function (data) {
                                 _this.vechicles = data;
                                 var vechicleIndex = data.map(function (e) { return e.vechicle.code; }).indexOf(vechicle);
                                 _this.selectedVechicle = _this.vechicles[vechicleIndex]['vechicle'];
-                                _this.catagoryService.getLeafposition(vechicle).subscribe(function (data) {
+                                _this.catagoryService.getLeafposition(category, subcategory, segment, subsegment, leaftype, vechicle).subscribe(function (data) {
                                     _this.leafPosition = data;
                                     var leafPostionIndex = data.map(function (e) { return e.leafposition.code; }).indexOf(leafposition);
                                     _this.selectedLeafPosition = _this.leafPosition[leafPostionIndex]['leafposition'];
-                                    _this.catagoryService.getVechiclemodel(leafposition).subscribe(function (data) {
+                                    _this.catagoryService.getVechiclemodel(category, subcategory, segment, subsegment, leaftype, vechicle, leafposition).subscribe(function (data) {
                                         _this.vechicleModel = data;
                                         var vechiclemodelIndex = data.map(function (e) { return e.vechiclemodel.code; }).indexOf(vechiclemodel);
                                         _this.selectedVechiclemodel = _this.vechicleModel[vechiclemodelIndex]['vechiclemodel'];
@@ -2818,23 +2818,23 @@ var CatagoryService = /** @class */ (function () {
     CatagoryService.prototype.getSubcategory = function (code) {
         return this.http.get(this.baseUrl + "/api/subcategory?code=" + code);
     };
-    CatagoryService.prototype.getSegment = function (code) {
-        return this.http.get(this.baseUrl + "/api/segment?code=" + code);
+    CatagoryService.prototype.getSegment = function (code, category) {
+        return this.http.get(this.baseUrl + "/api/segment?code=" + code + "&category=" + category);
     };
-    CatagoryService.prototype.getSubSegment = function (code) {
-        return this.http.get(this.baseUrl + "/api/subsegment?code=" + code);
+    CatagoryService.prototype.getSubSegment = function (code, category, subcategory) {
+        return this.http.get(this.baseUrl + "/api/subsegment?code=" + code + "&category=" + category + "&subcategory=" + subcategory);
     };
-    CatagoryService.prototype.getLeaftype = function (code) {
-        return this.http.get(this.baseUrl + "/api/leaftype?code=" + code);
+    CatagoryService.prototype.getLeaftype = function (category, subcategory, segment, subsegmentcode) {
+        return this.http.get(this.baseUrl + "/api/leaftype?code=" + subsegmentcode + "&segment=" + segment + "&category=" + category + "&subcategory=" + subcategory);
     };
-    CatagoryService.prototype.getVechicle = function (code) {
-        return this.http.get(this.baseUrl + "/api/vechicle?code=" + code);
+    CatagoryService.prototype.getVechicle = function (category, subcategory, segment, subsegmentcode, code) {
+        return this.http.get(this.baseUrl + "/api/vechicle?code=" + code + "&subsegment=" + subsegmentcode + "&segment=" + segment + "&category=" + category + "&subcategory=" + subcategory);
     };
-    CatagoryService.prototype.getLeafposition = function (code) {
-        return this.http.get(this.baseUrl + "/api/leafposition?code=" + code);
+    CatagoryService.prototype.getLeafposition = function (category, subcategory, segment, subsegmentcode, leaftype, code) {
+        return this.http.get(this.baseUrl + "/api/leafposition?code=" + code + "&leaftype=" + leaftype + "&subsegment=" + subsegmentcode + "&segment=" + segment + "&category=" + category + "&subcategory=" + subcategory);
     };
-    CatagoryService.prototype.getVechiclemodel = function (code) {
-        return this.http.get(this.baseUrl + "/api/vechiclemodel?code=" + code);
+    CatagoryService.prototype.getVechiclemodel = function (category, subcategory, segment, subsegmentcode, leaftype, leafposition, code) {
+        return this.http.get(this.baseUrl + "/api/vechiclemodel?code=" + code + "&leafposition=" + leafposition + "&leaftype=" + leaftype + "&subsegment=" + subsegmentcode + "&segment=" + segment + "&category=" + category + "&subcategory=" + subcategory);
     };
     CatagoryService.prototype.getRootTopLeafCategories = function () {
         //console.log("Test");

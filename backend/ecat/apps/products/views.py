@@ -36,48 +36,69 @@ class ProductList(generics.ListCreateAPIView):
         if page_size is not None:
             pagination.PageNumberPagination.page_size = page_size
 
-        queryset = Product.objects.filter(status="1")
-
-        category = self.request.query_params.get('category')
+        # queryset = Product.objects.filter(status="1")
+        vechiclemodel = self.request.query_params.get('vechiclemodel',None)
+        leafposition = self.request.query_params.get('leafposition',None)
+        vechicle = self.request.query_params.get('vechicle',None)
+        leaftype = self.request.query_params.get('leaftype',None)
+        subsegment = self.request.query_params.get('subsegment',None)
+        segment = self.request.query_params.get('segment',None)
+        category = self.request.query_params.get('category',None)
+        subcategory = self.request.query_params.get('subcategory',None)
+        query = Q()
+        if leafposition is not None:
+            query.add(Q(leafposition__code=leafposition), Q.AND)
+        if vechiclemodel is not None:
+            query.add(Q(vechiclemodel__code=vechiclemodel), Q.AND)
+        if vechicle is not None:
+            query.add(Q(vechicle__code=vechicle), Q.AND)
+        if leaftype is not None:
+            query.add(Q(leaftype__code=leaftype), Q.AND)
+        if subsegment is not None:
+            query.add(Q(subsegment__code=subsegment), Q.AND)    
+        if segment is not None:
+            query.add(Q(segment__code=segment), Q.AND)
         if category is not None:
-            queryset = queryset.filter(category__code__contains = category)
-
+            query.add(Q(category__code=category), Q.AND)
+        if subcategory is not None:
+            query.add(Q(subcategory__code=subcategory), Q.AND)
         item_code = self.request.query_params.get('item_code')
         if item_code is not None:
-            queryset = queryset.filter(item_code__contains = item_code)    
+            query.add(Q(item_code=item_code), Q.AND)
+        queryset = Product.objects.filter(query).distinct('leafposition__id')
+        return queryset 
+        # subcategory = self.request.query_params.get('subcategory')
+        # if subcategory is not None:
+        #     queryset = queryset.filter(subcategory__code = subcategory)
 
-        subcategory = self.request.query_params.get('subcategory')
-        if subcategory is not None:
-            queryset = queryset.filter(subcategory__code__contains = subcategory)
+        # segment = self.request.query_params.get('segment')
+        # if segment is not None:
+        #     pass
+        #     queryset = queryset.filter(Q(segment__code = segment))
 
-        segment = self.request.query_params.get('segment')
-        if segment is not None:
-            pass
-            queryset = queryset.filter(Q(segment__code__contains = segment))
-
-        subsegment = self.request.query_params.get('subsegment')
-        if subsegment is not None:
-            pass
-            queryset = queryset.filter(Q(subsegment__code__contains = subsegment))
+        # subsegment = self.request.query_params.get('subsegment')
+        # if subsegment is not None:
+        #     pass
+        #     queryset = queryset.filter(Q(subsegment__code__contains = subsegment))
         
-        leaftype = self.request.query_params.get('leaftype')
-        if leaftype is not None:
-            queryset = queryset.filter(leaftype__code__contains = leaftype)
+        # leaftype = self.request.query_params.get('leaftype')
+        # if leaftype is not None:
+        #     queryset = queryset.filter(leaftype__code__contains = leaftype)
 
-        vechicle = self.request.query_params.get('vechicle')
-        if vechicle is not None:
-            queryset = queryset.filter(vechicle__code__contains = vechicle)
-            return queryset     
+        # vechicle = self.request.query_params.get('vechicle')
+        # if vechicle is not None:
+        #     queryset = queryset.filter(vechicle__code__contains = vechicle)
+        #     return queryset     
 
-        leafposition = self.request.query_params.get('leafposition')
-        if leafposition is not None:
-            queryset = queryset.filter(leafposition__code__contains = "3")
+        # leafposition = self.request.query_params.get('leafposition')
+        # if leafposition is not None:
+        #     queryset = queryset.filter(leafposition__code__contains = "3")
 
-        vechiclemodel = self.request.query_params.get('vechiclemodel')
-        if vechiclemodel is not None:
-            queryset = queryset.filter(vechiclemodel__code__contains = vechiclemodel)
+        # vechiclemodel = self.request.query_params.get('vechiclemodel')
+        # if vechiclemodel is not None:
+        #     queryset = queryset.filter(vechiclemodel__code__contains = vechiclemodel)
 
-        return queryset     
+        # return queryset     
 
 class CartList(generics.ListCreateAPIView):
     serializer_class = CartSerializer

@@ -67,12 +67,18 @@ class SubSegmentList(generics.ListCreateAPIView):
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     pagination_class = None
     def get_queryset(self):
-        code = self.request.query_params.get('code')
-        segment = Segment.objects.filter(code=code)
-        if segment.exists():
-            segmentObj = segment.last()
-            queryset = Product.objects.filter(segment_id=segmentObj.id).distinct('subsegment__id')
-            return queryset
+        code = self.request.query_params.get('code',None)
+        category = self.request.query_params.get('category',None)
+        subcategory = self.request.query_params.get('subcategory',None)
+        query = Q()
+        if code is not None:
+            query.add(Q(segment__code=code), Q.AND)
+        if category is not None:
+            query.add(Q(category__code=category), Q.AND)
+        if subcategory is not None:
+            query.add(Q(subcategory__code=subcategory), Q.AND)
+        queryset = Product.objects.filter(query).distinct('subsegment__id')
+        return queryset
 
 class LeafTypeList(generics.ListCreateAPIView):
     serializer_class = ProductLeafTypeSerializer
@@ -80,12 +86,22 @@ class LeafTypeList(generics.ListCreateAPIView):
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     pagination_class = None
     def get_queryset(self):
-        code = self.request.query_params.get('code')
-        subsegment = SubSegment.objects.filter(code=code)
-        if subsegment.exists():
-            subsegmentObj = subsegment.last()
-            queryset = Product.objects.filter(subsegment_id=subsegmentObj.id).distinct('leaftype__id')
-            return queryset
+        code = self.request.query_params.get('code',None)
+        segment = self.request.query_params.get('segment',None)
+        category = self.request.query_params.get('category',None)
+        subcategory = self.request.query_params.get('subcategory',None)
+        query = Q()
+        if code is not None:
+            query.add(Q(subsegment__code=code), Q.AND)
+        if segment is not None:
+            query.add(Q(segment__code=segment), Q.AND)
+        if category is not None:
+            query.add(Q(category__code=category), Q.AND)
+        if subcategory is not None:
+            query.add(Q(subcategory__code=subcategory), Q.AND)
+        # print("query",query)    
+        queryset = Product.objects.filter(query).distinct('leaftype__id')
+        return queryset
 
 class VechicleList(generics.ListCreateAPIView):
     serializer_class = ProductVechicleSerializer
@@ -93,12 +109,25 @@ class VechicleList(generics.ListCreateAPIView):
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     pagination_class = None
     def get_queryset(self):
-        code = self.request.query_params.get('code')
-        leafType = LeafType.objects.filter(code=code)
-        if leafType.exists():
-            leafTypeObj = leafType.last()
-            queryset = Product.objects.filter(leaftype_id=leafTypeObj.id).distinct('vechicle__id')
-            return queryset
+        code = self.request.query_params.get('code',None)
+        subsegment = self.request.query_params.get('subsegment',None)
+        segment = self.request.query_params.get('segment',None)
+        category = self.request.query_params.get('category',None)
+        subcategory = self.request.query_params.get('subcategory',None)
+        query = Q()
+        if code is not None:
+            query.add(Q(leaftype__code=code), Q.AND)
+        if subsegment is not None:
+            query.add(Q(subsegment__code=subsegment), Q.AND)    
+        if segment is not None:
+            query.add(Q(segment__code=segment), Q.AND)
+        if category is not None:
+            query.add(Q(category__code=category), Q.AND)
+        if subcategory is not None:
+            query.add(Q(subcategory__code=subcategory), Q.AND)
+        # print("query",query)    
+        queryset = Product.objects.filter(query).distinct('vechicle__id')
+        return queryset
 
 class BrandApiList(generics.ListCreateAPIView):
     serializer_class = ProductVechicleSerializer
@@ -116,12 +145,27 @@ class LeafPositionList(generics.ListCreateAPIView):
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     
     def get_queryset(self):
-        code = self.request.query_params.get('code')
-        vechicle = Vechicle.objects.filter(code=code)
-        if vechicle.exists():
-            vechicleObj = vechicle.last()
-            queryset = Product.objects.filter(vechicle_id=vechicleObj.id).distinct('leafposition__id')
-            return queryset                            
+        code = self.request.query_params.get('code',None)
+        leaftype = self.request.query_params.get('leaftype',None)
+        subsegment = self.request.query_params.get('subsegment',None)
+        segment = self.request.query_params.get('segment',None)
+        category = self.request.query_params.get('category',None)
+        subcategory = self.request.query_params.get('subcategory',None)
+        query = Q()
+        if code is not None:
+            query.add(Q(vechicle__code=code), Q.AND)
+        if leaftype is not None:
+            query.add(Q(leaftype__code=leaftype), Q.AND)
+        if subsegment is not None:
+            query.add(Q(subsegment__code=subsegment), Q.AND)    
+        if segment is not None:
+            query.add(Q(segment__code=segment), Q.AND)
+        if category is not None:
+            query.add(Q(category__code=category), Q.AND)
+        if subcategory is not None:
+            query.add(Q(subcategory__code=subcategory), Q.AND)
+        queryset = Product.objects.filter(query).distinct('leafposition__id')
+        return queryset                            
 
 class VechicleModelList(generics.ListCreateAPIView):
     serializer_class = ProductVechicleModelSerializer
@@ -130,12 +174,30 @@ class VechicleModelList(generics.ListCreateAPIView):
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     
     def get_queryset(self):
-        code = self.request.query_params.get('code')
-        leafPosition = LeafPosition.objects.filter(code=code)
-        if leafPosition.exists():
-            leafPositionObj = leafPosition.last()
-            queryset = Product.objects.filter(leafposition_id=leafPositionObj.id).distinct('vechiclemodel__id')
-            return queryset
+        code = self.request.query_params.get('code',None)
+        vechicle = self.request.query_params.get('vechicle',None)
+        leaftype = self.request.query_params.get('leaftype',None)
+        subsegment = self.request.query_params.get('subsegment',None)
+        segment = self.request.query_params.get('segment',None)
+        category = self.request.query_params.get('category',None)
+        subcategory = self.request.query_params.get('subcategory',None)
+        query = Q()
+        if code is not None:
+            query.add(Q(leafposition__code=code), Q.AND)
+        if vechicle is not None:
+            query.add(Q(vechicle__code=vechicle), Q.AND)
+        if leaftype is not None:
+            query.add(Q(leaftype__code=leaftype), Q.AND)
+        if subsegment is not None:
+            query.add(Q(subsegment__code=subsegment), Q.AND)    
+        if segment is not None:
+            query.add(Q(segment__code=segment), Q.AND)
+        if category is not None:
+            query.add(Q(category__code=category), Q.AND)
+        if subcategory is not None:
+            query.add(Q(subcategory__code=subcategory), Q.AND)
+        queryset = Product.objects.filter(query).distinct('leafposition__id')
+        return queryset      
 
 class StateList(generics.ListCreateAPIView):
 

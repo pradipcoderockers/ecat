@@ -82,23 +82,23 @@ export class CatagoryService {
   getSubcategory(code: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.baseUrl+"/api/subcategory?code="+code);
   }
-  getSegment(code: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.baseUrl+"/api/segment?code="+code);
+  getSegment(code: string,category:string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl+"/api/segment?code="+code+"&category="+category);
   }
-  getSubSegment(code: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.baseUrl+"/api/subsegment?code="+code);
+  getSubSegment(code: string,category:string,subcategory:string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl+"/api/subsegment?code="+code+"&category="+category+"&subcategory="+subcategory);
   }
-  getLeaftype(code: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.baseUrl+"/api/leaftype?code="+code);
+  getLeaftype(category:string, subcategory:string, segment:string, subsegmentcode: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl+"/api/leaftype?code="+subsegmentcode+"&segment="+segment+"&category="+category+"&subcategory="+subcategory);
   }
-  getVechicle(code: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.baseUrl+"/api/vechicle?code="+code);
+  getVechicle(category:string, subcategory:string, segment:string, subsegmentcode: string,code: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl+"/api/vechicle?code="+code+"&subsegment="+subsegmentcode+"&segment="+segment+"&category="+category+"&subcategory="+subcategory);
   }
-  getLeafposition(code: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.baseUrl+"/api/leafposition?code="+code);
+  getLeafposition(category:string, subcategory:string, segment:string, subsegmentcode: string,leaftype:string,code: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl+"/api/leafposition?code="+code+"&leaftype="+leaftype+"&subsegment="+subsegmentcode+"&segment="+segment+"&category="+category+"&subcategory="+subcategory);
   }
-  getVechiclemodel(code: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.baseUrl+"/api/vechiclemodel?code="+code);
+  getVechiclemodel(category:string, subcategory:string, segment:string, subsegmentcode: string,leaftype:string,leafposition:string,code: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl+"/api/vechiclemodel?code="+code+"&leafposition="+leafposition+"&leaftype="+leaftype+"&subsegment="+subsegmentcode+"&segment="+segment+"&category="+category+"&subcategory="+subcategory);
   }
   getRootTopLeafCategories(): Observable<ApiResponse> {
     //console.log("Test");

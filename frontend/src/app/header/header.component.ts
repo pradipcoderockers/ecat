@@ -99,7 +99,7 @@ export class HeaderComponent implements OnInit {
 				this.subCategories = data;
 				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
 				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
-				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+				this.catagoryService.getSegment(this.selectedSubCategory.code,category).subscribe((data: any) => {
 					this.segments = data;
 				});
 			});
@@ -115,11 +115,11 @@ export class HeaderComponent implements OnInit {
 				this.subCategories = data;
 				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
 				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
-				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+				this.catagoryService.getSegment(this.selectedSubCategory.code,category).subscribe((data: any) => {
 					this.segments = data;
 					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
 					this.selectedSegment = this.segments[segmentIndex]['segment']
-					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+					this.catagoryService.getSubSegment(segment,category, subcategory).subscribe((data: any) => {
 						this.subSegments = data;
 					});
 				});
@@ -137,15 +137,15 @@ export class HeaderComponent implements OnInit {
 				this.subCategories = data;
 				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
 				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
-				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+				this.catagoryService.getSegment(this.selectedSubCategory.code,category).subscribe((data: any) => {
 					this.segments = data;
 					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
 					this.selectedSegment = this.segments[segmentIndex]['segment']
-					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+					this.catagoryService.getSubSegment(segment,category, subcategory).subscribe((data: any) => {
 						this.subSegments = data;
 						var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
 						this.selectedSubSegment = this.subSegments[subSegmentIndex]['subsegment']
-						this.catagoryService.getLeaftype(subsegment).subscribe((data: any) => {
+						this.catagoryService.getLeaftype(category, subcategory, segment, subsegment).subscribe((data: any) => {
 							this.leafType = data;
 						});
 
@@ -164,19 +164,19 @@ export class HeaderComponent implements OnInit {
 				this.subCategories = data;
 				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
 				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
-				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+				this.catagoryService.getSegment(this.selectedSubCategory.code,category).subscribe((data: any) => {
 					this.segments = data;
 					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
 					this.selectedSegment = this.segments[segmentIndex]['segment']
-					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+					this.catagoryService.getSubSegment(segment,category, subcategory).subscribe((data: any) => {
 						this.subSegments = data;
 						var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
 						this.selectedSubSegment = this.subSegments[subSegmentIndex]['subsegment']
-						this.catagoryService.getLeaftype(subsegment).subscribe((data: any) => {
+						this.catagoryService.getLeaftype(category, subcategory, segment, subsegment).subscribe((data: any) => {
 							this.leafType = data;
 							var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
 							this.selectedLeafType = this.leafType[leafTypeIndex]['leaftype']
-							this.catagoryService.getVechicle(leaftype).subscribe((data: any) => {
+							this.catagoryService.getVechicle(category, subcategory, segment, subsegment,leaftype).subscribe((data: any) => {
 								this.vechicles = data;
 							});
 						});
@@ -197,23 +197,23 @@ export class HeaderComponent implements OnInit {
 				this.subCategories = data;
 				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
 				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
-				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+				this.catagoryService.getSegment(this.selectedSubCategory.code,category).subscribe((data: any) => {
 					this.segments = data;
 					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
 					this.selectedSegment = this.segments[segmentIndex]['segment']
-					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+					this.catagoryService.getSubSegment(segment,category, subcategory).subscribe((data: any) => {
 						this.subSegments = data;
 						var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
 						this.selectedSubSegment = this.subSegments[subSegmentIndex]['subsegment']
-						this.catagoryService.getLeaftype(subsegment).subscribe((data: any) => {
+						this.catagoryService.getLeaftype(category, subcategory, segment, subsegment).subscribe((data: any) => {
 							this.leafType = data;
 							var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
 							this.selectedLeafType = this.leafType[leafTypeIndex]['leaftype']
-							this.catagoryService.getVechicle(leaftype).subscribe((data: any) => {
+							this.catagoryService.getVechicle(category, subcategory, segment, subsegment,leaftype).subscribe((data: any) => {
 								this.vechicles = data;
 								var vechicleIndex = data.map(function (e) { return e.vechicle.code; }).indexOf(vechicle);
 								this.selectedVechicle = this.vechicles[vechicleIndex]['vechicle']
-								this.catagoryService.getLeafposition(vechicle).subscribe((data: any) => {
+								this.catagoryService.getLeafposition(category, subcategory, segment, subsegment,leaftype, vechicle).subscribe((data: any) => {
 									this.leafPosition = data;
 								});
 							});
@@ -233,27 +233,27 @@ export class HeaderComponent implements OnInit {
 				this.subCategories = data;
 				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
 				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
-				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+				this.catagoryService.getSegment(this.selectedSubCategory.code,category).subscribe((data: any) => {
 					this.segments = data;
 					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
 					this.selectedSegment = this.segments[segmentIndex]['segment']
-					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+					this.catagoryService.getSubSegment(segment,category, subcategory).subscribe((data: any) => {
 						this.subSegments = data;
 						var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
 						this.selectedSubSegment = this.subSegments[subSegmentIndex]['subsegment']
-						this.catagoryService.getLeaftype(subsegment).subscribe((data: any) => {
+						this.catagoryService.getLeaftype(category, subcategory, segment, subsegment).subscribe((data: any) => {
 							this.leafType = data;
 							var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
 							this.selectedLeafType = this.leafType[leafTypeIndex]['leaftype']
-							this.catagoryService.getVechicle(leaftype).subscribe((data: any) => {
+							this.catagoryService.getVechicle(category, subcategory, segment, subsegment,leaftype).subscribe((data: any) => {
 								this.vechicles = data;
 								var vechicleIndex = data.map(function (e) { return e.vechicle.code; }).indexOf(vechicle);
 								this.selectedVechicle = this.vechicles[vechicleIndex]['vechicle']
-								this.catagoryService.getLeafposition(vechicle).subscribe((data: any) => {
+								this.catagoryService.getLeafposition(category, subcategory, segment, subsegment,leaftype, vechicle).subscribe((data: any) => {
 									this.leafPosition = data;
 									var leafPostionIndex = data.map(function (e) { return e.leafposition.code; }).indexOf(leafposition);
 									this.selectedLeafPosition = this.leafPosition[leafPostionIndex]['leafposition']
-									this.catagoryService.getVechiclemodel(leafposition).subscribe((data: any) => {
+									this.catagoryService.getVechiclemodel(category, subcategory, segment, subsegment, leaftype, vechicle, leafposition).subscribe((data: any) => {
 										this.vechicleModel = data;
 									});
 								});
@@ -274,27 +274,27 @@ export class HeaderComponent implements OnInit {
 				this.subCategories = data;
 				var subCatindex = data.map(function (e) { return e.subcategory.code; }).indexOf(subcategory);
 				this.selectedSubCategory = this.subCategories[subCatindex]['subcategory']
-				this.catagoryService.getSegment(this.selectedSubCategory.code).subscribe((data: any) => {
+				this.catagoryService.getSegment(this.selectedSubCategory.code,category).subscribe((data: any) => {
 					this.segments = data;
 					var segmentIndex = data.map(function (e) { return e.segment.code; }).indexOf(segment);
 					this.selectedSegment = this.segments[segmentIndex]['segment']
-					this.catagoryService.getSubSegment(segment).subscribe((data: any) => {
+					this.catagoryService.getSubSegment(segment,category, subcategory).subscribe((data: any) => {
 						this.subSegments = data;
 						var subSegmentIndex = data.map(function (e) { return e.subsegment.code; }).indexOf(subsegment);
 						this.selectedSubSegment = this.subSegments[subSegmentIndex]['subsegment']
-						this.catagoryService.getLeaftype(subsegment).subscribe((data: any) => {
+						this.catagoryService.getLeaftype(category, subcategory, segment, subsegment).subscribe((data: any) => {
 							this.leafType = data;
 							var leafTypeIndex = data.map(function (e) { return e.leaftype.code; }).indexOf(leaftype);
 							this.selectedLeafType = this.leafType[leafTypeIndex]['leaftype']
-							this.catagoryService.getVechicle(leaftype).subscribe((data: any) => {
+							this.catagoryService.getVechicle(category, subcategory, segment, subsegment,leaftype).subscribe((data: any) => {
 								this.vechicles = data;
 								var vechicleIndex = data.map(function (e) { return e.vechicle.code; }).indexOf(vechicle);
 								this.selectedVechicle = this.vechicles[vechicleIndex]['vechicle']
-								this.catagoryService.getLeafposition(vechicle).subscribe((data: any) => {
+								this.catagoryService.getLeafposition(category, subcategory, segment, subsegment,leaftype, vechicle).subscribe((data: any) => {
 									this.leafPosition = data;
 									var leafPostionIndex = data.map(function (e) { return e.leafposition.code; }).indexOf(leafposition);
 									this.selectedLeafPosition = this.leafPosition[leafPostionIndex]['leafposition']
-									this.catagoryService.getVechiclemodel(leafposition).subscribe((data: any) => {
+									this.catagoryService.getVechiclemodel(category, subcategory, segment, subsegment, leaftype, vechicle, leafposition).subscribe((data: any) => {
 										this.vechicleModel = data;
 										var vechiclemodelIndex = data.map(function (e) { return e.vechiclemodel.code; }).indexOf(vechiclemodel);
 									    this.selectedVechiclemodel = this.vechicleModel[vechiclemodelIndex]['vechiclemodel']

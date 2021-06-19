@@ -32,42 +32,42 @@ export class CategoryComponent implements OnInit {
 			}
 			else if (leafposition && vechicle && leaftype && subsegment && segment && subcategory && category) {
 				this.catType = 'vechiclemodel'
-				this.service.getVechiclemodel(leafposition).subscribe((data:any) => {
+				this.service.getVechiclemodel(category, subcategory, segment, subsegment,leaftype, vechicle,leafposition).subscribe((data:any) => {
 						this.subcategories = data;
 						this.subcategoriesloading = false;
 				});
 			}
 			else if (vechicle && leaftype && subsegment && segment && subcategory && category) {
 				this.catType = 'leafposition'
-				this.service.getLeafposition(vechicle).subscribe((data:any) => {
+				this.service.getLeafposition(category, subcategory, segment, subsegment,leaftype, vechicle).subscribe((data:any) => {
 					this.subcategories = data;
 					this.subcategoriesloading = false;
 				});
 			}
 			else if (leaftype && subsegment && segment && subcategory && category) {
 				this.catType = 'vechicle'
-				this.service.getVechicle(leaftype).subscribe((data:any) => {
+				this.service.getVechicle(category, subcategory, segment, subsegment,leaftype).subscribe((data:any) => {
 					this.subcategories = data;
 					this.subcategoriesloading = false;
 				});
 			}
 			else if (subsegment && segment && subcategory && category) {
 				this.catType = 'leaftype'
-				this.service.getLeaftype(subsegment).subscribe((data:any) => {
+				this.service.getLeaftype(category, subcategory, segment, subsegment).subscribe((data:any) => {
 					this.subcategories = data;
 					this.subcategoriesloading = false;
 				});
 			}
 			else if (segment && subcategory && category) {
 				this.catType = 'subsegment'
-				this.service.getSubSegment(segment).subscribe((data:any) => {
+				this.service.getSubSegment(segment,category,subcategory).subscribe((data:any) => {
 					this.subcategories = data;
 					this.subcategoriesloading = false;
 				});
 			}
 			else if (subcategory && category) {
 				this.catType = 'segment'
-				this.service.getSegment(subcategory).subscribe((data:any) => {
+				this.service.getSegment(subcategory,category).subscribe((data:any) => {
 					this.subcategories = data;
 					this.subcategoriesloading = false;
 				});
