@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // baseUrl:  'https://ecat.jaispring.com',
-  baseUrl:  'http://localhost:8002',
+  baseUrl:  'https://ecat.jaispring.com',
+  // baseUrl:  'http://localhost:8002',
   baseUrln: 'http://34.68.23.11:4200/pradipAPI/api.php?path='
 };
 

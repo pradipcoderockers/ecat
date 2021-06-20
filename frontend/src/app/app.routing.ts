@@ -32,7 +32,7 @@ const routes: Routes = [
   { path: 'userProfile', component: UserProfileComponent },
   { path: 'order', component: OrderComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'auth/password/reset/confirm/:uid/:token', component: ResetPasswordComponent },
+  { path: 'auth/password/reset/confirm/:uid/:token/', component: ResetPasswordComponent },
 
 ];
 
