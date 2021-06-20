@@ -165,6 +165,13 @@ export class CatagoryService {
     return this.http.post<ApiResponse>(environment.baseUrl + '/auth/login/', loginPayload);
   }
 
+  resetPassword(data) : Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(environment.baseUrl + '/auth/password/reset/', data);
+  }
+  resetPasswordConfirm(data) : Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(environment.baseUrl + '/auth/password/reset/confirm/', data);
+  }
+
   uploadFile(data: FormData): Observable<HttpEvent<string>>{
     const uploadReq = new HttpRequest('POST', this.baseUrl+'/fileUpload/', data, {
       reportProgress: true,

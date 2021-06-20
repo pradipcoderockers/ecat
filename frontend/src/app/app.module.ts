@@ -36,6 +36,8 @@ import { HomepageModalComponent } from './modal/homepage-modal/homepage-modal.co
 import { FavouriteaddComponent } from './favouriteadd/favouriteadd.component';
 import { NgFlashMessagesModule } from 'ng-flash-messages';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
 	HomepageModalComponent,
 	FavouriteaddComponent,
 	VerifyEmailComponent,
+	ForgotPasswordComponent,
+	ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

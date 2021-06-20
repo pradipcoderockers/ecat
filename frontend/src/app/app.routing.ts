@@ -13,7 +13,8 @@ import { FavouriteComponent } from './favourite/favourite.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { OrderComponent } from './order/order.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
-
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import {ResetPasswordComponent}  from './reset-password/reset-password.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,6 +31,8 @@ const routes: Routes = [
   { path: 'fave', component: FavouriteComponent },
   { path: 'userProfile', component: UserProfileComponent },
   { path: 'order', component: OrderComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'auth/password/reset/confirm/:uid/:token', component: ResetPasswordComponent },
 
 ];
 

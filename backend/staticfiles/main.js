@@ -159,6 +159,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ng_flash_messages__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ng-flash-messages */ "./node_modules/ng-flash-messages/ng-flash-messages.umd.js");
 /* harmony import */ var ng_flash_messages__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(ng_flash_messages__WEBPACK_IMPORTED_MODULE_35__);
 /* harmony import */ var _verify_email_verify_email_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./verify-email/verify-email.component */ "./src/app/verify-email/verify-email.component.ts");
+/* harmony import */ var _forgot_password_forgot_password_component__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./forgot-password/forgot-password.component */ "./src/app/forgot-password/forgot-password.component.ts");
+/* harmony import */ var _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./reset-password/reset-password.component */ "./src/app/reset-password/reset-password.component.ts");
 
 
 
@@ -169,6 +171,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // import { ItemComponent } from './item/item.component';
+
+
 
 
 
@@ -226,6 +230,8 @@ var AppModule = /** @class */ (function () {
                 _modal_homepage_modal_homepage_modal_component__WEBPACK_IMPORTED_MODULE_33__["HomepageModalComponent"],
                 _favouriteadd_favouriteadd_component__WEBPACK_IMPORTED_MODULE_34__["FavouriteaddComponent"],
                 _verify_email_verify_email_component__WEBPACK_IMPORTED_MODULE_36__["VerifyEmailComponent"],
+                _forgot_password_forgot_password_component__WEBPACK_IMPORTED_MODULE_37__["ForgotPasswordComponent"],
+                _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_38__["ResetPasswordComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -280,6 +286,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./user-profile/user-profile.component */ "./src/app/user-profile/user-profile.component.ts");
 /* harmony import */ var _order_order_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./order/order.component */ "./src/app/order/order.component.ts");
 /* harmony import */ var _verify_email_verify_email_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./verify-email/verify-email.component */ "./src/app/verify-email/verify-email.component.ts");
+/* harmony import */ var _forgot_password_forgot_password_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./forgot-password/forgot-password.component */ "./src/app/forgot-password/forgot-password.component.ts");
+/* harmony import */ var _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./reset-password/reset-password.component */ "./src/app/reset-password/reset-password.component.ts");
+
+
 
 
 
@@ -310,6 +320,8 @@ var routes = [
     { path: 'fave', component: _favourite_favourite_component__WEBPACK_IMPORTED_MODULE_11__["FavouriteComponent"] },
     { path: 'userProfile', component: _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_12__["UserProfileComponent"] },
     { path: 'order', component: _order_order_component__WEBPACK_IMPORTED_MODULE_13__["OrderComponent"] },
+    { path: 'forgot-password', component: _forgot_password_forgot_password_component__WEBPACK_IMPORTED_MODULE_15__["ForgotPasswordComponent"] },
+    { path: 'auth/password/reset/confirm/:uid/:token', component: _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_16__["ResetPasswordComponent"] },
 ];
 var routing = _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRoot(routes);
 
@@ -1176,6 +1188,95 @@ var FileUploadComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/forgot-password/forgot-password.component.css":
+/*!***************************************************************!*\
+  !*** ./src/app/forgot-password/forgot-password.component.css ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2ZvcmdvdC1wYXNzd29yZC9mb3Jnb3QtcGFzc3dvcmQuY29tcG9uZW50LmNzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/forgot-password/forgot-password.component.html":
+/*!****************************************************************!*\
+  !*** ./src/app/forgot-password/forgot-password.component.html ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n\n<div class=\"right-data\">\n  <div class=\"login-main\">\n\n    <!--login-page e-catelog div-->\n    <div class=\"e-catelog\">\n      <figure>\n        <img src=\"./assets/images/logo.png\" alt=\"e-catelog\">\n      </figure>\n      <div class=\"line-center line-center-main\"></div>\n      <div class=\"line-center\"></div>\n      <div class=\"line-center\"></div>\n    </div>\n    <!--login-page login-form div-->\n    <form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\n      <div class=\"login-form\">\n        <div class=\"login-form-field\">\n          <figure>\n            <img src=\"./assets/images/logo.png\" alt=\"logo\">\n          </figure>\n          <div class=\"form-username\">\n            <label for=\"username\" class=\"label-style\">Email</label>\n            <br>\n            <input type=\"text\" class=\"form-control\" formControlName=\"username\" id=\"username\" autocomplete=\"off\" placeholder=\"Your Email *\">\n            <div class=\"error\" *ngIf=\"loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched\">Username is required</div>\n          </div>\n\n\n          <div>\n            <button class=\"btnSubmit\" [disabled]=\"loginForm.invalid\">Reset Pasword</button>\n            <div *ngIf=\"invalidLogin\" class=\"error\">\n              <div>Invalid credentials.</div>\n            </div>\n\n          </div>\n          <div class=\"line-form\"></div>\n\n        </div>\n\n      </div>\n    </form>\n\n\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/forgot-password/forgot-password.component.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/forgot-password/forgot-password.component.ts ***!
+  \**************************************************************/
+/*! exports provided: ForgotPasswordComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ForgotPasswordComponent", function() { return ForgotPasswordComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _service_catagory_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../service/catagory.service */ "./src/app/service/catagory.service.ts");
+
+
+
+
+
+var ForgotPasswordComponent = /** @class */ (function () {
+    function ForgotPasswordComponent(formBuilder, router, service) {
+        this.formBuilder = formBuilder;
+        this.router = router;
+        this.service = service;
+        this.invalidLogin = false;
+        this.loginuser = false;
+    }
+    ForgotPasswordComponent.prototype.ngOnInit = function () {
+        window.localStorage.removeItem('token');
+        this.loginForm = this.formBuilder.group({
+            username: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required])],
+        });
+    };
+    ForgotPasswordComponent.prototype.onSubmit = function () {
+        if (this.loginForm.controls.username.value) {
+            var loginPayload = {
+                email: this.loginForm.controls.username.value,
+            };
+            this.service.resetPassword(loginPayload).subscribe(function (data) {
+                alert(data.detail);
+            }, function (error) {
+                alert("Please enter valid email");
+            }, function () {
+                location.reload();
+            });
+        }
+        else {
+            alert("Please enter valid email");
+            return false;
+        }
+    };
+    ForgotPasswordComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-forgot-password',
+            template: __webpack_require__(/*! ./forgot-password.component.html */ "./src/app/forgot-password/forgot-password.component.html"),
+            styles: [__webpack_require__(/*! ./forgot-password.component.css */ "./src/app/forgot-password/forgot-password.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _service_catagory_service__WEBPACK_IMPORTED_MODULE_4__["CatagoryService"]])
+    ], ForgotPasswordComponent);
+    return ForgotPasswordComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/header.service.ts":
 /*!***********************************!*\
   !*** ./src/app/header.service.ts ***!
@@ -1765,7 +1866,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n\n<div class=\"right-data\">\n<div class=\"login-main\">\n\n    <!--login-page e-catelog div-->\n    <div class=\"e-catelog\">\n        <figure>\n            <img src=\"./assets/images/logo.png\" alt=\"e-catelog\">\n        </figure>\n        <div class=\"line-center line-center-main\"></div>\n        <div class=\"line-center\"></div>\n        <div class=\"line-center\"></div>\n    </div>\n    <!--login-page login-form div-->\n    <form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\n    <div class=\"login-form\">\n        <div class=\"login-form-field\">\n            <figure>\n                <img src=\"./assets/images/logo.png\" alt=\"logo\">\n            </figure>\n            <div class=\"form-username\">\n                <label for=\"username\" class=\"label-style\">Email</label><br>\n                <input type=\"text\" class=\"form-control\" formControlName=\"username\" id=\"username\" autocomplete=\"off\" placeholder=\"Your Email *\">\n                                  <div class=\"error\" *ngIf=\"loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched\">Username is required</div> \n            </div>\n            <div class=\"form-password\">\n                <label for=\"pass-word\" class=\"label-style\">Password</label><br> \n                <input type=\"password\" class=\"form-control\" formControlName=\"password\" id=\"pwd\" autocomplete=\"off\" placeholder=\"Your Password *\">\n                <div class=\"error\" *ngIf=\"loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched\">Password is required</div>\n            </div>\n            <div class=\"keep-log\">\n                <span class=\"check-box\"><input type=\"checkbox\"><p> Keep me Sign in </p></span>\n            </div>\n            <div >\n                <button class=\"btnSubmit\" [disabled]=\"loginForm.invalid\">Login</button>\n                <div *ngIf=\"invalidLogin\" class=\"error\">\n                    <div>Invalid credentials.</div>\n                </div>\n                \n            </div>\n            <div class=\"line-form\"></div>\n            <div class=\"forgot-password\">\n                <a href=\"#\">Forgot Password?</a>\n            </div>\n        </div>\n        \n    </div>\n  </form>\n  \n  \n  </div>\n</div>"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n\n<div class=\"right-data\">\n<div class=\"login-main\">\n\n    <!--login-page e-catelog div-->\n    <div class=\"e-catelog\">\n        <figure>\n            <img src=\"./assets/images/logo.png\" alt=\"e-catelog\">\n        </figure>\n        <div class=\"line-center line-center-main\"></div>\n        <div class=\"line-center\"></div>\n        <div class=\"line-center\"></div>\n    </div>\n    <!--login-page login-form div-->\n    <form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\n    <div class=\"login-form\">\n        <div class=\"login-form-field\">\n            <figure>\n                <img src=\"./assets/images/logo.png\" alt=\"logo\">\n            </figure>\n            <div class=\"form-username\">\n                <label for=\"username\" class=\"label-style\">Email</label><br>\n                <input type=\"text\" class=\"form-control\" formControlName=\"username\" id=\"username\" autocomplete=\"off\" placeholder=\"Your Email *\">\n                                  <div class=\"error\" *ngIf=\"loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched\">Username is required</div> \n            </div>\n            <div class=\"form-password\">\n                <label for=\"pass-word\" class=\"label-style\">Password</label><br> \n                <input type=\"password\" class=\"form-control\" formControlName=\"password\" id=\"pwd\" autocomplete=\"off\" placeholder=\"Your Password *\">\n                <div class=\"error\" *ngIf=\"loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched\">Password is required</div>\n            </div>\n            <div class=\"keep-log\">\n                <span class=\"check-box\"><input type=\"checkbox\"><p> Keep me Sign in </p></span>\n            </div>\n            <div >\n                <button class=\"btnSubmit\" [disabled]=\"loginForm.invalid\">Login</button>\n                <div *ngIf=\"invalidLogin\" class=\"error\">\n                    <div>Invalid credentials.</div>\n                </div>\n                \n            </div>\n            <div class=\"line-form\"></div>\n            <div class=\"forgot-password\">\n                <a href=\"/forgot-password\">Forgot Password?</a>\n            </div>\n        </div>\n        \n    </div>\n  </form>\n  \n  \n  </div>\n</div>"
 
 /***/ }),
 
@@ -2686,6 +2787,105 @@ var ProfileComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/reset-password/reset-password.component.css":
+/*!*************************************************************!*\
+  !*** ./src/app/reset-password/reset-password.component.css ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Jlc2V0LXBhc3N3b3JkL3Jlc2V0LXBhc3N3b3JkLmNvbXBvbmVudC5jc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/reset-password/reset-password.component.html":
+/*!**************************************************************!*\
+  !*** ./src/app/reset-password/reset-password.component.html ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n\n<div class=\"right-data\">\n  <div class=\"login-main\">\n\n    <!--login-page e-catelog div-->\n    <div class=\"e-catelog\">\n      <figure>\n        <img src=\"./assets/images/logo.png\" alt=\"e-catelog\">\n      </figure>\n      <div class=\"line-center line-center-main\"></div>\n      <div class=\"line-center\"></div>\n      <div class=\"line-center\"></div>\n    </div>\n    <!--login-page login-form div-->\n    <form  #myform=\"ngForm\"  (ngSubmit)=\"onSubmit(myform)\">\n      <div class=\"login-form\">\n        <div class=\"login-form-field\">\n          <figure>\n            <img src=\"./assets/images/logo.png\" alt=\"logo\">\n          </figure>\n          <div class=\"form-username\">\n            <label for=\"username\" class=\"label-style\">New Password</label>\n            <br>\n\n            <input type=\"password\" class=\"form-control\" name=\"new_password\"  ngModel id=\"new_password\" autocomplete=\"off\" placeholder=\"New Password *\">\n          </div>\n\n          <div class=\"form-username\">\n            <label for=\"username\" class=\"label-style\">Confrim Password</label>\n            <br>\n            <input type=\"password\" class=\"form-control\" name=\"confirm_password\"  ngModel  id=\"confirm_password\" autocomplete=\"off\" placeholder=\"Confrim Password *\">\n          </div>\n          <div>\n            <button class=\"btnSubmit\" [disabled]=\"loginForm.invalid\">Save</button>\n            \n\n          </div>\n          <div class=\"line-form\"></div>\n\n        </div>\n\n      </div>\n    </form>\n\n\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/reset-password/reset-password.component.ts":
+/*!************************************************************!*\
+  !*** ./src/app/reset-password/reset-password.component.ts ***!
+  \************************************************************/
+/*! exports provided: ResetPasswordComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResetPasswordComponent", function() { return ResetPasswordComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _service_catagory_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../service/catagory.service */ "./src/app/service/catagory.service.ts");
+
+
+
+
+var ResetPasswordComponent = /** @class */ (function () {
+    function ResetPasswordComponent(route, router, service) {
+        this.route = route;
+        this.router = router;
+        this.service = service;
+        this.loginuser = false;
+    }
+    ResetPasswordComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        window.localStorage.removeItem('token');
+        this.route.params.subscribe(function (params) {
+            _this.uid = params['uid'];
+            _this.token = params['token'];
+        });
+    };
+    ResetPasswordComponent.prototype.onSubmit = function (form) {
+        var _this = this;
+        console.log("ds", form.value.new_password);
+        if (form.value.new_password) {
+            var new_password = form.value.new_password;
+            var confirm_password = form.value.confirm_password;
+            if (new_password !== confirm_password) {
+                alert("Password dont match");
+                return;
+            }
+            var loginPayload = {
+                new_password1: new_password,
+                new_password2: confirm_password,
+                uid: this.uid,
+                token: this.token,
+            };
+            this.service.resetPasswordConfirm(loginPayload).subscribe(function (data) {
+                alert(data.detail);
+            }, function (error) {
+                alert("Please enter your password");
+            }, function () {
+                _this.router.navigate(['/login']);
+            });
+        }
+        else {
+            alert("Please enter your password");
+            return false;
+        }
+    };
+    ResetPasswordComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-reset-password',
+            template: __webpack_require__(/*! ./reset-password.component.html */ "./src/app/reset-password/reset-password.component.html"),
+            styles: [__webpack_require__(/*! ./reset-password.component.css */ "./src/app/reset-password/reset-password.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _service_catagory_service__WEBPACK_IMPORTED_MODULE_3__["CatagoryService"]])
+    ], ResetPasswordComponent);
+    return ResetPasswordComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/search/search.component.css":
 /*!*********************************************!*\
   !*** ./src/app/search/search.component.css ***!
@@ -2894,6 +3094,12 @@ var CatagoryService = /** @class */ (function () {
     };
     CatagoryService.prototype.login = function (loginPayload) {
         return this.http.post(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + '/auth/login/', loginPayload);
+    };
+    CatagoryService.prototype.resetPassword = function (data) {
+        return this.http.post(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + '/auth/password/reset/', data);
+    };
+    CatagoryService.prototype.resetPasswordConfirm = function (data) {
+        return this.http.post(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + '/auth/password/reset/confirm/', data);
     };
     CatagoryService.prototype.uploadFile = function (data) {
         var uploadReq = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpRequest"]('POST', this.baseUrl + '/fileUpload/', data, {
@@ -3158,8 +3364,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 var environment = {
     production: false,
-    baseUrl: 'https://ecat.jaispring.com',
-    // baseUrl:  'http://localhost:8002',
+    // baseUrl:  'https://ecat.jaispring.com',
+    baseUrl: 'http://localhost:8002',
     baseUrln: 'http://34.68.23.11:4200/pradipAPI/api.php?path='
 };
 /*
