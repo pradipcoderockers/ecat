@@ -196,7 +196,7 @@ class VechicleModelList(generics.ListCreateAPIView):
             query.add(Q(category__code=category), Q.AND)
         if subcategory is not None:
             query.add(Q(subcategory__code=subcategory), Q.AND)
-        queryset = Product.objects.filter(query).distinct('leafposition__id')
+        queryset = Product.objects.filter(query).distinct('vechiclemodel_id')
         return queryset      
 
 class StateList(generics.ListCreateAPIView):
