@@ -236,7 +236,6 @@ class OrderList(generics.ListCreateAPIView):
         try:
             write_to_csv(csv_arr,filename)
             csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
-            # print("csv_url",csv_url)
             sendemail(oreder_data.data,csv_url)
         except Exception as e:
             pass      

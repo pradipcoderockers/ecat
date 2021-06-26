@@ -177,6 +177,7 @@ class VechicleModelList(generics.ListCreateAPIView):
         code = self.request.query_params.get('code',None)
         vechicle = self.request.query_params.get('vechicle',None)
         leaftype = self.request.query_params.get('leaftype',None)
+        leafposition = self.request.query_params.get('leafposition',None)
         subsegment = self.request.query_params.get('subsegment',None)
         segment = self.request.query_params.get('segment',None)
         category = self.request.query_params.get('category',None)
@@ -184,6 +185,8 @@ class VechicleModelList(generics.ListCreateAPIView):
         query = Q()
         if code is not None:
             query.add(Q(leafposition__code=code), Q.AND)
+        # if leafposition is not None:
+        #     query.add(Q(leafposition__code=leafposition), Q.AND)
         if vechicle is not None:
             query.add(Q(vechicle__code=vechicle), Q.AND)
         if leaftype is not None:
@@ -196,6 +199,7 @@ class VechicleModelList(generics.ListCreateAPIView):
             query.add(Q(category__code=category), Q.AND)
         if subcategory is not None:
             query.add(Q(subcategory__code=subcategory), Q.AND)
+        print("query",query)
         queryset = Product.objects.filter(query).distinct('vechiclemodel_id')
         return queryset      
 

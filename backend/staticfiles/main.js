@@ -3034,7 +3034,7 @@ var CatagoryService = /** @class */ (function () {
         return this.http.get(this.baseUrl + "/api/leafposition?code=" + code + "&leaftype=" + leaftype + "&subsegment=" + subsegmentcode + "&segment=" + segment + "&category=" + category + "&subcategory=" + subcategory);
     };
     CatagoryService.prototype.getVechiclemodel = function (category, subcategory, segment, subsegmentcode, leaftype, leafposition, code) {
-        return this.http.get(this.baseUrl + "/api/vechiclemodel?code=" + code + "&leafposition=" + leafposition + "&leaftype=" + leaftype + "&subsegment=" + subsegmentcode + "&segment=" + segment + "&category=" + category + "&subcategory=" + subcategory);
+        return this.http.get(this.baseUrl + "/api/vechiclemodel?code=" + code + "&vechicle=" + leafposition + "&leaftype=" + leaftype + "&subsegment=" + subsegmentcode + "&segment=" + segment + "&category=" + category + "&subcategory=" + subcategory);
     };
     CatagoryService.prototype.getRootTopLeafCategories = function () {
         //console.log("Test");

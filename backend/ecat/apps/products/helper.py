@@ -136,6 +136,6 @@ def write_to_csv(input_json,file_name):
         csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
         header = [key for key, value in input_json[0].items()]
         csv_writer.writerow(header)
-        for item in input_json[1:]:
+        for item in input_json:
             row = [v for k, v in item.items()]
             csv_writer.writerow(row)    

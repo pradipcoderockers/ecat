@@ -26,7 +26,7 @@ class OrderSerializer(serializers.ModelSerializer):
         date_time_str = str(obj.addedon)
         now_utc = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S.%f")
         now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
-        format = "%Y-%m-%d %H:%M:%S %Z%z"
+        format = "%Y-%m-%d %H:%M %p"
         return now_asia.strftime(format)
         # utc_tz= tz.gettz('UTC')
         # india_tz= tz.gettz('Asia/Kolkata')
