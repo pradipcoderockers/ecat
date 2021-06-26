@@ -321,7 +321,7 @@ var routes = [
     { path: 'userProfile', component: _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_12__["UserProfileComponent"] },
     { path: 'order', component: _order_order_component__WEBPACK_IMPORTED_MODULE_13__["OrderComponent"] },
     { path: 'forgot-password', component: _forgot_password_forgot_password_component__WEBPACK_IMPORTED_MODULE_15__["ForgotPasswordComponent"] },
-    { path: 'auth/password/reset/confirm/:uid/:token/', component: _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_16__["ResetPasswordComponent"] },
+    { path: 'auth/password/reset/confirm/:uid/:token', component: _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_16__["ResetPasswordComponent"] },
 ];
 var routing = _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRoot(routes);
 
