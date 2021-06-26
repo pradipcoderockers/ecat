@@ -29,6 +29,8 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 from allauth.account.views import PasswordResetView
+from django.shortcuts import redirect
+
 urlpatterns = [
     url('api/admin/', admin.site.urls),
     url('api/', include('categories.urls')),
@@ -39,7 +41,7 @@ urlpatterns = [
     url(r'^auth/registration/complete/$', views.complete_view, name='account_confirm_complete'),
     url(r'^auth/login/', LoginView.as_view(), name='account_login'),
     url(r'^auth/registration/', CustomRegisterView.as_view(), name='custom_register_view'),
-    url(r'^auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.null_view, name='password_reset_confirm'),
+    url(r'^auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.password_reset_view, name='password_reset_confirm'),
     url(r'^auth/', include('rest_auth.urls')),
     url(r'^me/', CurrentUserView.as_view(), name='current_user_view'),
     url(r'^accounts/', include('accounts.urls')),

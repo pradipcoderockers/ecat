@@ -5,6 +5,13 @@ from allauth.account.views import ConfirmEmailView, app_settings
 from django.http import Http404, HttpResponseBadRequest
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
+from django.shortcuts import redirect
+
+@api_view()
+def password_reset_view(request, *args, **kwargs):
+    url = request.path.strip("/")
+    return redirect('/'+url)
+    # return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view()
 def null_view(request, *args, **kwargs):
