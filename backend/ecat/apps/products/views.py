@@ -225,7 +225,7 @@ class OrderList(generics.ListCreateAPIView):
                 arr['Customer_Code'] = order['user']
                 arr['Shipping_point'] = ""
                 arr['line_no'] = 1
-                arr['Item_Code'] = order['product']['item_code']
+                arr['Item_Code'] = "'"+str(order['product']['item_code'])
                 arr['Item_Variant'] = order['product']['variant']
                 arr['Quantity'] = order['quantity']
                 arr['Remarks'] = ""
