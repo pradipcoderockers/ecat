@@ -214,10 +214,10 @@ class OrderList(generics.ListCreateAPIView):
         order.save()
         oreder_data = OrderSerializer(order)
         queryset = OrderDetail.objects.filter(order_id=order.id).distinct().values('order_number')
+        csv_arr = []
         for csvorder in queryset:
             orderMain =  OrderDetail.objects.filter(order_number=csvorder['order_number'])
             data = OrderDetailSerializer(orderMain,many=True)
-            csv_arr = []
             for order in data.data:
                 arr = {}
                 arr['Ecatalogue_orderno'] = csvorder['order_number']
@@ -233,6 +233,8 @@ class OrderList(generics.ListCreateAPIView):
             csvfilename = str(csvorder['order_number'])    
             csvfilename = csvfilename.replace('/','-')+'.csv' 
             filename = settings.MEDIA_ROOT+'/order_csv/'+csvfilename
+        # print("csv_arr",csv_arr)
+        # write_to_csv(csv_arr,filename)
         try:
             write_to_csv(csv_arr,filename)
             csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 

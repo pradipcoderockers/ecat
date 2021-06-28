@@ -54,12 +54,16 @@ class SegmentList(generics.ListCreateAPIView):
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     pagination_class = None
     def get_queryset(self):
-        code = self.request.query_params.get('code')
-        subcategory = SubCategory.objects.filter(code=code)
-        if subcategory.exists():
-            subcategoryObj = subcategory.last()
-            queryset = Product.objects.filter(subcategory_id=subcategoryObj.id).distinct('segment__id')
-            return queryset
+        category = self.request.query_params.get('category',None)
+        subcategory = self.request.query_params.get('code',None)
+        query = Q()
+        if category is not None:
+            query.add(Q(category__code=category), Q.AND)
+        if subcategory is not None:
+            query.add(Q(subcategory__code=subcategory), Q.AND)
+        queryset = Product.objects.filter(query).distinct('segment__id')
+        return queryset
+    
 
 class SubSegmentList(generics.ListCreateAPIView):
     serializer_class = ProductSubSegmentSerializer
