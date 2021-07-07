@@ -38,7 +38,11 @@ class ProductSerializer(serializers.ModelSerializer):
         return qr_code_url
 
     def get_length(self, obj):
-        format_float = "{:.2f}".format(float(obj.length))
+        format_float = obj.length
+        try:
+            format_float = "{:.2f}".format(str(obj.length))
+        except:
+            pass
         return format_float
     class Meta:
         model = Product
