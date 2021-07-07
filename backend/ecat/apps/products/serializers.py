@@ -40,7 +40,7 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_length(self, obj):
         format_float = obj.length
         try:
-            format_float = "{:.2f}".format(str(obj.length))
+            format_float = format(obj.length,".2f")
         except:
             pass
         return format_float
