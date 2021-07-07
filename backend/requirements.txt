@@ -5,7 +5,7 @@ Django==3.0.4
 django-cors-headers==3.3.0
 django-extensions==2.1.6
 django-split-settings==1.0.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 idna==2.9
 jupyter==1.0.0
 ldap3==2.7
