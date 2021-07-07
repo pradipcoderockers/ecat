@@ -5,6 +5,9 @@ from django.conf import settings
 from django.http import Http404
 from products.models import Product, Favourite, Cart
 from categories.serializers import *
+import qrcode
+from django.conf import settings
+import os.path
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
@@ -16,6 +19,23 @@ class ProductSerializer(serializers.ModelSerializer):
     leafposition = LeafPositionSerializer(read_only=True)
     vechiclemodel = VechicleModelSerializer(read_only=True)
     length = serializers.SerializerMethodField()
+    qrcode = serializers.SerializerMethodField()
+
+    def get_qrcode(self, obj):
+        input_data = obj.name+" "+ obj.item_code+ " "+ obj.variant+" "+ obj.item_description
+        qr = qrcode.QRCode(
+                version=1,
+                box_size=10,
+                border=5)
+        qr.add_data(input_data)
+        qr.make(fit=True)
+        qr_code_url = settings.ROOT_URL+"/api/media/"+obj.item_code+".png"
+        try:
+            img = qr.make_image(fill='black', back_color='white')
+            img.save(settings.MEDIA_ROOT+"/"+obj.item_code+".png")
+        except:
+            pass
+        return qr_code_url
 
     def get_length(self, obj):
         format_float = "{:.2f}".format(float(obj.length))

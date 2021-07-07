@@ -10,6 +10,7 @@ from categories.models import Category
 from datetime import datetime
 from pytz import timezone
 from dateutil import tz
+from django.db.models import Sum
 class OrderDetailSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
     class Meta:
@@ -21,39 +22,28 @@ class OrderSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     order_details = OrderDetailSerializer(read_only=True)
     addedon = serializers.SerializerMethodField()
-    
+    total_quantity = serializers.SerializerMethodField()
+    # csv_url  = serializers.SerializerMethodField()
     def get_addedon(self, obj):
         date_time_str = str(obj.addedon)
         now_utc = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S.%f")
         now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
         format = "%Y-%m-%d %H:%M %p"
         return now_asia.strftime(format)
-        # utc_tz= tz.gettz('UTC')
-        # india_tz= tz.gettz('Asia/Kolkata')
-        # print("date_time_str[:date_time_str.rindex('-')]",date_time_str[:date_time_str.rindex('-')])
-        # utc = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S.%f")
-        # utc = utc.replace(tzinfo=utc_tz)
-        # india_time_with_offset = utc.astimezone(india_tz)
-        # india_time_without_offset = india_time_with_offset.replace(tzinfo=None)
-        # return india_time_without_offset
         
-        # # local = pytz.timezone("Asia/Kolkata")
-        # naive = datetime.strptime(obj.addedon, "%Y-%m-%d %H:%M:%S.%f")
-        # myFormat = "%Y-%m-%d %H:%M %p"
-        # # print("naive",naive.strftime(myFormat))
-        # # print("naive",naive)
-        # # local_dt = local.localize(int(naive), is_dst=None)
-        # # utc_dt = local_dt.astimezone(pytz.utc)
-        # # date_time_obj = datetime.strptime(obj.addedon, '%Y-%m-%d %H:%M:%S.%f')
-        
-        # # print('dddddddddd',date_time_obj)
-        # # date_time = datetime.datetime.fromisoformat(obj.addedon)
-        # return naive.strftime(myFormat)
-
+    def get_total_quantity(self, obj):
+        total_quantity = OrderDetail.objects.filter(order_id = obj.id).values('quantity').aggregate(Sum('quantity'))
+        return total_quantity['quantity__sum']
     
+    # def get_csv_url(self, obj):
+    #     csvfilename = str(obj.order_number)    
+    #     csvfilename = csvfilename.replace('/','-')+'.csv' 
+    #     csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
+    #     return csv_url
+
     class Meta:
         model = Order
-        fields = ('orderId',  'order_details','user','total','addedon')
+        fields = ('orderId',  'order_details','user','total','addedon','total_quantity')
     def to_representation(self,instance):
         serializer = super().to_representation(instance)
         category_list = Category.objects.all().values()

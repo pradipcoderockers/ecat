@@ -6,7 +6,7 @@
             <span style="color:red; font-size:1.4rem;" (click)="activeModal.dismiss('Cross click')">&#10006;</span>
         </div>
     </div>
-    <div class="modal-body" style="min-height: 650px !important;max-height: 950px !important;" *ngIf="item">
+    <div class="modal-body" style="min-height: 750px !important;max-height: 950px !important;" *ngIf="item">
         <div class="{{(item.image)?'col-xs-6':'col-xs-12'}} ">
             <div class="part-name-modal">
                 <div class="part-model-left">
@@ -167,15 +167,17 @@
                 </div>
             </div>
         </div>
+        
+       
         <div class="part-name-modal">
             <div class="part-model-left">
-                IMAGE
-                
+                <img style="height: 160px"  [src]="item.qrcode">  
             </div>
             <span class="colon-modal">:</span>
             <div  *ngIf="item.category" class="part-model-right">
-                <img id="myImgN" style="height: 100px" src="/assets/images/ecat/category/{{item.category.code}}.png" class="open-img">
+                <img id="myImgN" style="height: 160px" src="/assets/images/ecat/category/{{item.category.code}}.png" class="open-img">
             </div>
         </div>
+       
     </div>
 </div>

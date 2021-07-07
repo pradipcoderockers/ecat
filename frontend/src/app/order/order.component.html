@@ -11,21 +11,25 @@
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
         <thead>
           <tr>
-            <th width="30">ORDER NO</th>
+            <th width="20">ORDER NO</th>
             <th  width="20">DATE</th>
             <th  width="20">ACTION</th>
-            <th  width="30">AMOUNT</th>
+            <th  width="20">AMOUNT</th>
+            <th  width="20">Download Order Details(csv)</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let  orderOne of orderList ">
-            <td  width="30">{{ orderOne.orderId }}</td>
+            <td  width="20">{{ orderOne.orderId }}</td>
             <td  width="20">{{ orderOne.addedon }}</td>
             
             <td  width="20">
               <button class="modal-trigger view-btn" (click)="openN(content,orderOne)">VIEW</button>
             </td>
-            <td  width="30">{{ orderOne.total }}</td>
+            <td  width="20">{{ orderOne.total.toFixed(2) }}</td>
+            <td  width="20">
+              <button class="modal-trigger view-btn" (click)="openN(content,orderOne)">DOWNLOAD</button>
+            </td>
           </tr>
         </tbody>
       </table>

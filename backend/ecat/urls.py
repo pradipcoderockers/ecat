@@ -29,7 +29,6 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 from allauth.account.views import PasswordResetView
-from django.shortcuts import redirect
 
 urlpatterns = [
     url('api/admin/', admin.site.urls),

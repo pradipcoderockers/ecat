@@ -108,7 +108,13 @@ class CartList(generics.ListCreateAPIView):
     def get_queryset(self):
         return self.queryset.filter(user_id= self.request.user.id)
     def post(self, request, *args, **kwargs): 
-        Cart.objects.get_or_create(product_id = self.request.data.get('product_id'), quantity = self.request.data.get('quantity'),
+        check_cart = Cart.objects.filter(product_id = self.request.data.get('product_id'),user = self.request.user)
+        if check_cart.exists():
+            check_cart  = check_cart.first()
+            check_cart.quantity = check_cart.quantity+int(self.request.data.get('quantity'))
+            check_cart.save()
+        else:
+            Cart.objects.get_or_create(product_id = self.request.data.get('product_id'), quantity = self.request.data.get('quantity'),
         user = self.request.user)
         return Response('created')
 
@@ -235,9 +241,11 @@ class OrderList(generics.ListCreateAPIView):
             filename = settings.MEDIA_ROOT+'/order_csv/'+csvfilename
         # print("csv_arr",csv_arr)
         # write_to_csv(csv_arr,filename)
+        csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
+
+        # sendemail(oreder_data.data,csv_url)
         try:
             write_to_csv(csv_arr,filename)
-            csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
             sendemail(oreder_data.data,csv_url)
         except Exception as e:
             pass      

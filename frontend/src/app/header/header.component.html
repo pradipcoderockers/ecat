@@ -11,12 +11,12 @@
   <div class="maininnerright">
     <div class="innerrighticon">
       <span>
-        <a [routerLink]="['/fave']">FAVOURITE
+        <a href="/fave">FAVOURITE
           <i class="fas fa-heart" style="color:red;"></i>
         </a>
       </span>
       <span>
-        <a [routerLink]="['/cart']">CART
+        <a href="/cart">CART
           <i class="fas fa-shopping-cart"></i>
         </a>
       </span>
@@ -26,7 +26,7 @@
         </a>
         <div class="dropdown-content-user">
           <a [routerLink]="['/order']" *ngIf="loginuser">My Order</a>
-          <a [routerLink]="['/fave']" *ngIf="loginuser">My Favourite List</a>
+          <a href="/fave" *ngIf="loginuser">My Favourite List</a>
           <a [routerLink]="['/profile']" *ngIf="loginuser">My Profile</a>
           <a [routerLink]="['/userProfile']" *ngIf="!loginuser"> Create User Profile</a>
           <a [routerLink]="['/login']" *ngIf="!loginuser">Login</a>

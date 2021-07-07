@@ -14,6 +14,8 @@ export class OrderModalComponent implements OnInit {
    
     userName = window.localStorage.getItem('userName');
     userMrp = {}
+    userType = ['Admin','Retailer','Distributor','General User']
+
   constructor(public activeModal: NgbActiveModal, private service:CatagoryService) {}
 
   ngOnInit() {
