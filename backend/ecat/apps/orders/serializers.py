@@ -36,9 +36,13 @@ class OrderSerializer(serializers.ModelSerializer):
         return total_quantity['quantity__sum']
     
     def get_csv_url(self, obj):
-        csv_detail = OrderDetail.objects.filter(order_id = obj.id).last()
-        csvfilename = str(csv_detail.order_number)    
-        csvfilename = csvfilename.replace('/','-')+'.csv' 
+        csvfilename = ''
+        try:
+            csv_detail = OrderDetail.objects.filter(order_id = obj.id).last()
+            csvfilename = str(csv_detail.order_number)    
+            csvfilename = csvfilename.replace('/','-')+'.csv' 
+        except Exception as e:
+            pass
         csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
         return csv_url
 
