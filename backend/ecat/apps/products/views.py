@@ -188,7 +188,13 @@ class OrderList(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer 
     def get_queryset(self):
-        
+        page = self.request.query_params.get('page')
+        page_size = self.request.query_params.get('page_size',100)
+        if page is not None:
+            pagination.PageNumberPagination.page = page
+            
+        if page_size is not None:
+            pagination.PageNumberPagination.page_size = page_size
         query_set = self.queryset.filter(user_id= self.request.user.id)
         return query_set
     def post(self, request, *args, **kwargs): 
