@@ -22,14 +22,16 @@
 
 					<thead style="background:#0B9FDB" class="table-primary">
 						<tr class="table-primary">
-							<th colspan="2">SALSE ORDER NUMBER</th>
-							<th colspan="2">SALSE ORDER DATE</th>
+							<th width="50%" colspan="2">SALSE ORDER NUMBER</th>
+							<th width="25%">Company Code</th>
+							<th width="25%">SALSE ORDER DATE</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td colspan="2">{{orderOne.orders && orderOne.orders[0] && orderOne.orders[0]['order_number']}}</td>
-							<td colspan="2">{{Order.addedon}}</td>
+							<td align="left" width="50%" colspan="2">{{orderOne.orders && orderOne.orders[0] && orderOne.orders[0]['order_number']}}</td>
+							<td align="left" width="25%">{{Order.user.profile && Order.user.profile.company_code }}</td>
+							<td align="left" width="25%">{{Order.addedon}}</td>
 
 						</tr>
 					</tbody>
@@ -101,15 +103,21 @@
 				<tbody>
 					<tr>
 						<td colspan="2">
+							<strong>Total Quantity</strong>
+						</td>
+						<td colspan="2" >
+							<strong>{{Order.total_quantity}}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
 							<strong>GRAND Total</strong>
 						</td>
 						
-						<td colspan="3" style="float: right;">
+						<td colspan="2">
 							<strong>{{Order.total.toFixed(2)}}</strong>
 						</td>
-						<td colspan="2" style="float: right;width: 91px">
-							<strong>{{Order.total_quantity}}</strong>
-						</td>
+						
 					</tr>
 				</tbody>
 			</table>

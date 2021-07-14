@@ -28,7 +28,7 @@
             </td>
             <td  width="20">{{ orderOne.total.toFixed(2) }}</td>
             <td  width="20">
-              <button class="modal-trigger view-btn" (click)="openN(content,orderOne)">DOWNLOAD</button>
+              <a class="modal-trigger view-btn" target="_blank" [attr.href]="orderOne.csv_url" >DOWNLOAD</a>
             </td>
           </tr>
         </tbody>

@@ -23,7 +23,7 @@ class OrderSerializer(serializers.ModelSerializer):
     order_details = OrderDetailSerializer(read_only=True)
     addedon = serializers.SerializerMethodField()
     total_quantity = serializers.SerializerMethodField()
-    # csv_url  = serializers.SerializerMethodField()
+    csv_url  = serializers.SerializerMethodField()
     def get_addedon(self, obj):
         date_time_str = str(obj.addedon)
         now_utc = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S.%f")
@@ -35,15 +35,16 @@ class OrderSerializer(serializers.ModelSerializer):
         total_quantity = OrderDetail.objects.filter(order_id = obj.id).values('quantity').aggregate(Sum('quantity'))
         return total_quantity['quantity__sum']
     
-    # def get_csv_url(self, obj):
-    #     csvfilename = str(obj.order_number)    
-    #     csvfilename = csvfilename.replace('/','-')+'.csv' 
-    #     csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
-    #     return csv_url
+    def get_csv_url(self, obj):
+        csv_detail = OrderDetail.objects.filter(order_id = obj.id).last()
+        csvfilename = str(csv_detail.order_number)    
+        csvfilename = csvfilename.replace('/','-')+'.csv' 
+        csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
+        return csv_url
 
     class Meta:
         model = Order
-        fields = ('orderId',  'order_details','user','total','addedon','total_quantity')
+        fields = ('csv_url','orderId',  'order_details','user','total','addedon','total_quantity')
     def to_representation(self,instance):
         serializer = super().to_representation(instance)
         category_list = Category.objects.all().values()

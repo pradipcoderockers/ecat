@@ -86,7 +86,7 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=255, blank=True, null=True)
     address1 = models.CharField(max_length=255, blank=True, null=True)
     address2 = models.CharField(max_length=255, blank=True, null=True)
-    sales_channel = models.CharField(max_length=255, blank=True, null=True)
+    company_code = models.CharField(max_length=255, blank=True, null=True)
     shipping_ou = models.CharField(max_length=255, blank=True, null=True)
     photo_url = models.CharField(max_length=255, blank=True, null=True)
     def __str__(self):
