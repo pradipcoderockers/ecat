@@ -185,7 +185,7 @@ class OrderDetails(generics.RetrieveUpdateAPIView):
 
 class OrderList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
-    queryset = Order.objects.all()
+    queryset = Order.objects.all().order_by('-id')
     serializer_class = OrderSerializer 
     def get_queryset(self):
         page = self.request.query_params.get('page')
@@ -243,12 +243,9 @@ class OrderList(generics.ListCreateAPIView):
                 arr['Remarks'] = ""
                 csv_arr.append(arr)
             csvfilename = str(csvorder['order_number'])    
-            csvfilename = csvfilename.replace('/','-')+'.csv' 
-            filename = settings.MEDIA_ROOT+'/order_csv/'+csvfilename
-        # print("csv_arr",csv_arr)
-        # write_to_csv(csv_arr,filename)
+        csvfilename = 'EC-00-'+str(n)+'-OR.csv'
+        filename = settings.MEDIA_ROOT+'/order_csv/'+csvfilename
         csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
-        sendemail(oreder_data.data,csv_url)
         try:
             write_to_csv(csv_arr,filename)
             sendemail(oreder_data.data,csv_url)

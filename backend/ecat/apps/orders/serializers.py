@@ -37,12 +37,7 @@ class OrderSerializer(serializers.ModelSerializer):
     
     def get_csv_url(self, obj):
         csvfilename = ''
-        try:
-            csv_detail = OrderDetail.objects.filter(order_id = obj.id).last()
-            csvfilename = str(csv_detail.order_number)    
-            csvfilename = csvfilename.replace('/','-')+'.csv' 
-        except Exception as e:
-            pass
+        csvfilename = 'EC-00-'+str(obj.orderId)+'-OR.csv'
         csv_url = settings.ROOT_URL+'/api/media/order_csv/'+csvfilename 
         return csv_url
 
