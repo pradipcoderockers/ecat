@@ -24,6 +24,12 @@ class OrderSerializer(serializers.ModelSerializer):
     addedon = serializers.SerializerMethodField()
     total_quantity = serializers.SerializerMethodField()
     csv_url  = serializers.SerializerMethodField()
+    order_number = serializers.SerializerMethodField()
+    
+    def get_order_number(self, obj):
+        order_number = OrderDetail.objects.filter(order_id = obj.id).distinct('order_number').values_list('order_number', flat=True)
+        return order_number
+
     def get_addedon(self, obj):
         date_time_str = str(obj.addedon)
         now_utc = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S.%f")
@@ -43,7 +49,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('csv_url','orderId',  'order_details','user','total','addedon','total_quantity')
+        fields = ('order_number','csv_url','orderId',  'order_details','user','total','addedon','total_quantity')
     def to_representation(self,instance):
         serializer = super().to_representation(instance)
         category_list = Category.objects.all().values()
