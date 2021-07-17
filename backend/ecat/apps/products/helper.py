@@ -45,7 +45,7 @@ def sendemail(Order, csv_url):
         header +=     '<td width="25%">'+str(Order["user"]['profile']['contact_number'])+'</td>'
         header +=     '<td width="25%">'+str(Order["user"]['profile']['address1'])+'<br/>'+str(Order["user"]['profile']['address2'])+'<br/>'+str(Order["user"]['profile']['city'])+'<br/>'+str(Order["user"]['profile']['state']['name'])+'<br/>'+str(Order["user"]['profile']['pincode'])+'<br/>'+str(Order["user"]['profile']['country'])+'</td></tr></tbody></table>'
         header +=     '<td width="25%"></td></tr></tbody></table>'
-        header += '<table class="table" border="1">'
+        header += '<table width="100%"  class="table" border="1">'
         header += '<thead class="table-primary" style="background:#0B9FDB;line-height: 50px">'
         header +=                 '<th style="text-align: center" colspan="10" class="table-primary">'
         header +=                   str(orderOne["name"])
