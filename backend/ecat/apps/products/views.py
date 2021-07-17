@@ -241,6 +241,7 @@ class OrderList(generics.ListCreateAPIView):
                 arr['Item_Variant'] = order['product']['variant']
                 arr['Quantity'] = order['quantity']
                 arr['Remarks'] = ""
+                arr['Company_Code'] = user.profile.company_code
                 csv_arr.append(arr)
             csvfilename = str(csvorder['order_number'])    
         csvfilename = 'EC-00-'+str(n)+'-OR.csv'

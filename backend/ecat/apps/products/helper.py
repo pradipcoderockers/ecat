@@ -14,9 +14,7 @@ def sendemail(Order, csv_url):
     header  +=  '<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">'
     header  +=  '<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>'
     header  += '<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>'
-
     header  +=  '</head>'
-
     header  +=  '<body>'
     header  +=  '<div  align="center">'
     header  +=  '<div class="col-xs-12">'
@@ -26,9 +24,10 @@ def sendemail(Order, csv_url):
     header  +=  '<span style="font-weight: bolder;font-weight: bolder;font-size: 24px;line-height: 81px;float: revert;" CLASS="model-head-detail">E-CAT CONNECT - SALE ORDER</span>'
     header  += '</div>'
     header  += '<div class="col-xs-12" style="border-top:1px solid grey;padding-top: 10px">'
-    header += '<table width="800" class="table" border="1">'
     
     for orderOne in Order['order_details']:
+        header += '<table width="100%" class="table" border="1">'
+
         header += '<thead style="background:#0B9FDB" class="table-primary">'
         header += '<tr class="table-primary">'
         header += '<th width="50%" colspan="2">SALSE ORDER NUMBER</th>'
@@ -38,8 +37,7 @@ def sendemail(Order, csv_url):
         header += '</thead>'
         header += '<tbody>'
         header += '<tr>'
-        header += '<td width="50%" colspan="2">'
-        header +=    str(orderOne["orders"][0]["order_number"])+'</td><td width="25%" >'+str(Order["user"]['profile']['company_code'])+'</td><td width="25%">'+str(Order["addedon"])+'</td>'
+        header += '<td width="50%" colspan="2">'+str(orderOne["orders"][0]["order_number"])+'</td><td width="25%">'+str(Order["user"]['profile']['company_code'])+'</td><td width="25%">'+str(Order["addedon"])+'</td>'
         header +=  '</tr></tbody><thead style="background:#0B9FDB" class="table-primary">'
         header +=  '<tr class="table-primary"><th  width="25%">CUSTOMER NAME </th> <th  width="25%">MOBILE</th><th  width="25%">ADDRESS</th> <th  width="25%">REMARKS</th></tr>'
         header += '</thead><tbody><tr>'
@@ -82,7 +80,7 @@ def sendemail(Order, csv_url):
             header +=             '</tbody>'
         header +=           ' </table>'
     
-    header  +=         '<table width="800" class="table" border="1">'
+    header  +=         '<table width="100%" class="table" border="1">'
     header  +=         '<thead style="background:#0B9FDB" class="table-primary">'
     header  +=         '<tr class="table-primary">'
     header  +=          '<th width="50%" ></th>'
@@ -116,7 +114,7 @@ def sendemail(Order, csv_url):
     header  += '</body>'
     header  += '</html>'
     html_content = header
-    print("html_content",html_content)
+    # print("html_content",html_content)
     to  =  ['jaiconnect@jaispring.com']
     if Order["user"]['profile']['state']['depo_email'] is not True:
         to  =   Order["user"]['profile']['state']['depo_email'].split(',')
@@ -130,6 +128,7 @@ def sendemail(Order, csv_url):
     html_message=html_content,
     fail_silently=False,
     )
+    print(html_message)
     if Order["user"]['email'] is not None:
         ##### USER EMAIAL
         user_email  = Order["user"]['email']
